@@ -4,7 +4,7 @@
 namespace model;
 
 
-class UsersDAL extends DBBase {
+class UsersDAL extends ModelDAL {
 
 // Init variables
     private static $DB_TABLE_NAME = 'ass2_user';

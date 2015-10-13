@@ -13,17 +13,17 @@ require_once('view/RegistrationView.php');
 
 # Controllers
 require_once('controller/AppBaseController.php');
-require_once('controller/AppController.php');
+require_once('controller/App.php');
 require_once('controller/LoginController.php');
 require_once('controller/RegistrationController.php');
 
 # Model BLL
-require_once('model/BLL/BLLBase.php');
+require_once('model/BLL/ModelBLL.php');
 require_once('model/BLL/User.php');
 require_once('model/BLL/UserRegistration.php');
 
 # Model DAL
-require_once('model/DAL/DBBase.php');
+require_once('model/DAL/ModelDAL.php');
 require_once('model/DAL/UsersDAL.php');
 
 # Model services

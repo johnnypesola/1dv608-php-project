@@ -3,7 +3,7 @@
 namespace model;
 
 
-class BLLBase {
+class ModelBLL {
 
     protected function IsValidString($stringName, $stringContent, $constraints = []) {
 

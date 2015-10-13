@@ -3,7 +3,7 @@
 namespace model;
 
 
-abstract class DBBase {
+abstract class ModelDAL {
 
 // Init variables
 

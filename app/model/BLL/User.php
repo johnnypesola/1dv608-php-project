@@ -3,7 +3,7 @@
 namespace model;
 
 
-class User extends BLLBase {
+class User extends ModelBLL {
 
 // Init variables
     private $userId;
