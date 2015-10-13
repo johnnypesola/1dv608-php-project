@@ -6,7 +6,14 @@
  */
 
 require_once 'settings.php';
-require_once 'core/App.php';
+
+// Controller
+require_once 'core/AppCtrl.php';
 require_once 'core/Controller.php';
+
+// Model
 require_once 'core/ModelBLL.php';
 require_once 'core/ModelDAL.php';
+
+// View
+require_once 'view/NavigationView.php';

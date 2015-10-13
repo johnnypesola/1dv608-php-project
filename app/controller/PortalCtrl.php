@@ -5,6 +5,8 @@
  * Time: 13:33
  */
 
+namespace controller;
+
 class PortalCtrl extends Controller
 {
     public function Index($name = 'brax', $yup = 'yeah')

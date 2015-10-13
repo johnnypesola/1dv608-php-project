@@ -5,6 +5,8 @@
  * Time: 14:41
  */
 
+namespace controller;
+
 class LoginCtrl extends Controller
 {
 

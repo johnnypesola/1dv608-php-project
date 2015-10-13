@@ -5,6 +5,8 @@
  * Time: 13:25
  */
 
+namespace controller;
+
 class Controller
 {
     public function Index()
@@ -30,8 +32,9 @@ class Controller
         return new $serviceName;
     }
 
-    protected function CreateView($viewPath, $data = [])
+    protected function CreateView($viewName, $data = [])
     {
-        require_once '../app/view/' . $viewPath . '.php';
+        require_once '../app/view/' . $viewName . '.php';
+        return new $viewName;
     }
 }

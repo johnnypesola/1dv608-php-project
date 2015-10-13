@@ -13,7 +13,7 @@ require_once('view/RegistrationView.php');
 
 # Controllers
 require_once('controller/AppBaseController.php');
-require_once('controller/App.php');
+require_once('controller/AppCtrl.php');
 require_once('controller/LoginController.php');
 require_once('controller/RegistrationController.php');
 

@@ -5,41 +5,52 @@
  * Time: 13:22
  */
 
-class App
-{
-    protected $controllerObj, $parameters;
+namespace controller;
 
-    // Assign default values
+class AppCtrl
+{
+    protected $controllerObj, $parameters, $url;
     protected $controllerStr = 'PortalCtrl';
     protected $methodStr = 'Index';
+    protected $navigationView;
 
+    // Constructor
     public function __construct()
     {
+        // Setup navigation view
+        $this->navigationView = new \view\NavigationView();
+
+        // Get url from navigationView
+        $this->url = $this->navigationView->GetUrl();
+
         // Parse and process url
-        $this->processUrl($this->parseUrlToArray());
+        $this->processUrl($this->parseUrlToArray($this->url));
 
         // Execute controller
         $this->executeController($this->controllerStr, $this->methodStr, $this->parameters);
     }
 
-    public function parseUrlToArray()
+    // Public methods
+    public function parseUrlToArray($url)
     {
         $returnArray = [];
 
-        if(isset($_GET['url'])) {
+        if(isset($url)) {
 
             // Remove excess whitespace and slashes
-            $url = rtrim($_GET['url']);
+            $url = rtrim($url);
 
             // Sanitize url.
             $url = filter_var($url, FILTER_SANITIZE_URL);
 
             $returnArray = explode('/', $url);
-
-            return $returnArray;
         }
+
+        return $returnArray;
     }
 
+
+    // Private methods
     private function executeController($controllerStr, $methodStr, $parametersArray)
     {
         // Call the controllers method with parameters.
@@ -102,7 +113,7 @@ class App
         return ucfirst(preg_replace("/[^A-Za-z]/","",$string));
     }
 
-    public function printDebugInfo()
+    private function printDebugInfo()
     {
         echo '<h3>Controller</h3><pre>';
         print_r($this->controllerObj);

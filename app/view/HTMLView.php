@@ -3,7 +3,7 @@
 
 namespace view;
 
-class HTMLView {
+class HtmlView extends View {
 
 // Init variables
     private $pageTitle = '';
@@ -17,6 +17,7 @@ class HTMLView {
         $this->pageTitle = $pageTitle;
         $this->pageHeader = $pageHeader;
         $this->pageCharset = $pageCharset;
+
 
     }
 
