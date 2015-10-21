@@ -7,7 +7,7 @@
 
 namespace controller;
 
-class AppCtrl
+class AppCtrl extends Controller
 {
     protected $controllerObj, $parameters, $url;
     protected $controllerStr = 'PortalCtrl';

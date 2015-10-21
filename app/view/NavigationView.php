@@ -3,7 +3,7 @@
 namespace view;
 
 
-class NavigationView {
+class NavigationView extends view {
 
 
 // Init variables
