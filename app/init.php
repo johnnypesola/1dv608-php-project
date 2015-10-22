@@ -7,13 +7,20 @@
 
 require_once 'settings.php';
 
-// Controller
-require_once 'core/AppCtrl.php';
+// Core files
 require_once 'core/Controller.php';
-
-// Model
+require_once 'core/View.php';
+require_once 'core/View.php';
 require_once 'core/ModelBLL.php';
 require_once 'core/ModelDAL.php';
 
+// Model
+require_once 'model/ValidationService.php';
+require_once 'model/BLL/AppSettings.php';
+require_once 'model/AppHelperService.php';
+
 // View
 require_once 'view/NavigationView.php';
+
+// Controller
+require_once 'core/AppCtrl.php';

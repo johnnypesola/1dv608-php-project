@@ -20,7 +20,8 @@ class NavigationView extends view {
 
     public function GetUrl()
     {
-        return $_GET;
+
+        return isset($_GET['url']) ? $_GET['url'] : '';
     }
 
 /*

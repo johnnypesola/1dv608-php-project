@@ -26,7 +26,7 @@ class ModelBLL {
             $constraints['emptyMsg'] = "$stringName is missing";
         }
         if(!isset($constraints['minLengthMsg'])) {
-            $constraints['minLengthMsg'] = "$stringName has too few characters, at least " . $constraints['minLength'] . " characters.";
+            $constraints['minLengthMsg'] = "$stringName has too few characters, should be at least " . $constraints['minLength'] . " characters.";
         }
         if(!isset($constraints['maxLengthMsg'])) {
             $constraints['maxLengthMsg'] = "$stringName is too long. Max length is " . $constraints['maxLength'] . " characters.";

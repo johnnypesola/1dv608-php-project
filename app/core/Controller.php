@@ -13,28 +13,4 @@ class Controller
     {
 
     }
-
-    protected function CreateBLLModel($modelName)
-    {
-        require_once '../app/model/' . $modelName . '.php';
-        return new $modelName;
-    }
-
-    protected function CreateDALModel($modelName)
-    {
-        require_once '../app/model/DAL/' . $modelName . '.php';
-        return new $modelName;
-    }
-
-    protected function CreateService($serviceName)
-    {
-        require_once '../app/model/' . $serviceName . '.php';
-        return new $serviceName;
-    }
-
-    protected function CreateView($viewName, $data = [])
-    {
-        require_once '../app/view/' . $viewName . '.php';
-        return new $viewName;
-    }
 }
