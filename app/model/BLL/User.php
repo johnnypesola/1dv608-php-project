@@ -18,7 +18,7 @@ class User extends ModelBLL {
     private static $userIdErrorMsg = "Invalid user id. It should be numeric and above 0.";
 
     private static $constraints = [
-        'username' => ['maxLength' => 30, 'minLength' => 1, 'throwException' => true],
+        'username' => ['maxLength' => 30, 'throwException' => true],
         'password' => ['maxLength' => 30],
         'token' => ['maxLength' => 255]
     ];

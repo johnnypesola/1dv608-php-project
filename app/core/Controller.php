@@ -9,6 +9,13 @@ namespace controller;
 
 class Controller
 {
+    private $ctrlHelper;
+
+    public function __construct($ctrlHelper)
+    {
+        $this->ctrlHelper = $ctrlHelper;
+    }
+
     public function Index()
     {
 

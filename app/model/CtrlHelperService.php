@@ -8,7 +8,7 @@
 namespace model;
 
 
-class AppHelperService {
+class CtrlHelperService {
 
     private $appSettingsObj,
             $appObj;
@@ -119,7 +119,7 @@ class AppHelperService {
             require_once $fileLocation;
 
             $controllerStr = $this->appSettingsObj->GetControllerNamespace() . $controllerName;
-            return new $controllerStr;
+            return new $controllerStr($this);
         }
 
         return false;

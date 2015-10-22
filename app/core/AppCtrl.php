@@ -7,14 +7,13 @@
 
 namespace controller;
 
-use model\AppHelperService;
+use model\CtrlHelperService;
 use model\AppSettings;
 
 class AppCtrl extends Controller
 {
     protected   $navigationView,
-                $urlService,
-                $ctrlHelper;
+                $urlService;
 
     public      $controllerObj,
                 $controllerStr,
@@ -38,7 +37,7 @@ class AppCtrl extends Controller
     public function __construct()
     {
         // Setup app helper service
-        $this->appHelper = new AppHelperService(
+        $this->appHelper = new CtrlHelperService(
             $this,
             new AppSettings(self::$APP_SETTINGS_ARRAY)
         );
@@ -57,8 +56,6 @@ class AppCtrl extends Controller
 
 
     // Private methods
-
-
     private function printDebugInfo()
     {
         echo '<h3>Controller</h3><pre>';

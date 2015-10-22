@@ -17,7 +17,7 @@ require_once 'core/ModelDAL.php';
 // Model
 require_once 'model/ValidationService.php';
 require_once 'model/BLL/AppSettings.php';
-require_once 'model/AppHelperService.php';
+require_once 'model/CtrlHelperService.php';
 
 // View
 require_once 'view/NavigationView.php';

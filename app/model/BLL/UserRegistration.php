@@ -11,18 +11,12 @@ class UserRegistration extends ModelBLL {
 
     private static $constraints = [
         'username' => [
-            'regexMsg' => "Username contains invalid characters.",
-            'emptyMsg' => "Username has too few characters, at least 3 characters.",
             'minLength' => 3,
-            'maxLength' => 30,
-            'maxMsg' => "Username is too long. Max length is 30 characters."
+            'maxLength' => 30
         ],
         'password' => [
-            'regexMsg' => "Password contains invalid characters.",
-            'emptyMsg' => "Password has too few characters, at least 6 characters.",
             'minLength' => 6,
             'maxLength' => 30,
-            'maxMsg' => "Password is too long. Max length is 30 characters.",
             'doNotMatchMsg' => "Passwords do not match."
         ]
     ];
