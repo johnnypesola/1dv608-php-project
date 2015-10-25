@@ -59,7 +59,7 @@ class User extends ModelBLL {
     public function SetUserName($value) {
 
         // Check if username is valid
-        if($this->IsValidString("Username", $value, self::$constraints["username"])) {
+        if($this->IsValidString("username", $value, self::$constraints["username"])) {
 
             // Set username
             $this->userName = trim($value);
@@ -74,7 +74,7 @@ class User extends ModelBLL {
     public function SetPassword($value, $doHashPassword = true, $doCheckPassword = true) {
 
         // Check if password is valid
-        if(!$doCheckPassword || $this->IsValidString("Password", $value, self::$constraints["password"])) {
+        if(!$doCheckPassword || $this->IsValidString("password", $value, self::$constraints["password"])) {
 
             // Set password
             if($doHashPassword) {
@@ -99,7 +99,7 @@ class User extends ModelBLL {
         }
 
         // Check if token is valid
-        if($this->IsValidString("Token", $value, self::$constraints["token"])) {
+        if($this->IsValidString("token", $value, self::$constraints["token"])) {
 
             // Hash token
             if($doHashToken) {

@@ -8,6 +8,18 @@
 namespace view;
 
 
-class LoginView {
+class LoginView extends view
+{
 
+    public function __construct()
+    {
+        $this->LoadTemplate('HeaderTpl');
+        $this->LoadTemplate('LoginTpl', ['somedata' => 'yeah']);
+        $this->LoadTemplate('FooterTpl');
+    }
+
+    public function DisplayHtml()
+    {
+
+    }
 } 

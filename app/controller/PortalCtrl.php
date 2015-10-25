@@ -9,10 +9,8 @@ namespace controller;
 
 class PortalCtrl extends Controller
 {
-    public function Index($name = 'brax', $yup = 'yeah')
+    public function Index()
     {
-        echo 'portal/index<br>';
 
-        echo $name . " " . $yup;
     }
 }

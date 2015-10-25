@@ -1,6 +1,10 @@
-<?php
-/**
- * Created by jopes
- * Date: 2015-10-13
- * Time: 21:57
- */ 
+
+<form action="" method="post">
+    <label>Användarnamn</label>
+    <input name="username" type="text">
+    <label>Lösenord</label>
+    <input name="password" type="password">
+
+    <input type="submit" name="submit" value="Logga in">
+    <?= $data['somedata'] ?>
+</form>

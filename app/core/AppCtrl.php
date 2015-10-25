@@ -23,7 +23,7 @@ class AppCtrl extends Controller
 
     # App settings
     private static $APP_SETTINGS_ARRAY = [
-        'defaultController' => 'PortalCtrl',
+        'defaultController' => 'PageCtrl',
         'defaultMethod' => 'Index',
         'controllerPath' => '../app/controller/',
         'controllerNamespace' => 'controller\\',
@@ -46,10 +46,10 @@ class AppCtrl extends Controller
         $this->navigationView = new \view\NavigationView();
 
         // Parse and process url
-        $this->appHelper->processUrl($this->navigationView->GetUrl());
+        $this->appHelper->ProcessUrl($this->navigationView->GetUrl());
 
         // Execute controller
-        $this->appHelper->executeController($this->controllerObj, $this->methodStr, $this->parameters);
+        $this->appHelper->ExecuteController($this->controllerObj, $this->methodStr, $this->parameters);
     }
 
     // Public methods

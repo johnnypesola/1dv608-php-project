@@ -17,6 +17,7 @@ class ModelBLL {
         if(!isset($constraints['regex'])) {
             $constraints['regex'] = '/[^a-z_\-0-9]/i';
         }
+        // Do not throw exception as default
         if(!isset($constraints['throwException'])) {
             $constraints['throwException'] = false;
         }
@@ -91,6 +92,7 @@ class ModelBLL {
         if(!isset($constraints['maxValue'])) {
             $constraints['maxValue'] = PHP_INT_MAX;
         }
+        // Do not throw exception as default
         if(!isset($constraints['throwException'])) {
             $constraints['throwException'] = false;
         }
@@ -155,6 +157,7 @@ class ModelBLL {
         if(!isset($constraints['maxValue'])) {
             $constraints['maxValue'] = PHP_INT_MAX; // No specific float max value available in php
         }
+        // Do not throw exception as default
         if(!isset($constraints['throwException'])) {
             $constraints['throwException'] = false;
         }
@@ -208,9 +211,11 @@ class ModelBLL {
 
     protected function IsValidBool($boolName, $boolContent, $constraints = [])
     {
+        // Default messages
         if(!isset($constraints['notBoolMsg'])) {
             $constraints['notBoolMsg'] = "$boolName should be a boolean value.";
         }
+        // Do not throw exception as default
         if(!isset($constraints['throwException'])) {
             $constraints['throwException'] = false;
         }
@@ -224,6 +229,40 @@ class ModelBLL {
             }
 
             ValidationService::AddValidationError($constraints['notBoolMsg']);
+        }
+    }
+
+    protected function IsClassType($objName, $objContent, $constraints = [])
+    {
+        // Return false if classType is not defined
+        if(!isset($constraints['classType'])) {
+            $constraints['classType'] = 'Unspecified';
+        }
+        // Default settings
+        if(!isset($constraints['allowNull'])) {
+            $constraints['allowNull'] = false;
+        }
+
+        // Do not throw exception as default
+        if(!isset($constraints['throwException'])) {
+            $constraints['throwException'] = false;
+        }
+
+        // Default messages
+        if(!isset($constraints['notClassTypeMsg'])) {
+            $constraints['notClassTypeMsg'] = "$objName should be an object of type: " . $constraints['classType'];
+        }
+
+
+        // Check if its a valid class
+        if(!($constraints['allowNull'] && is_null($objContent)) && !($objContent instanceof $constraints['classType']))
+        {
+            // Throw exception if specified
+            if($constraints['throwException']) {
+                throw new \Exception($constraints['notClassTypeMsg']);
+            }
+
+            ValidationService::AddValidationError($constraints['notClassTypeMsg']);
         }
     }
 } 

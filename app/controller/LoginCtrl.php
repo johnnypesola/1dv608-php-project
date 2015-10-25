@@ -7,7 +7,16 @@
 
 namespace controller;
 
+use view\LoginView;
+
 class LoginCtrl extends Controller
 {
+    private $loginView;
 
+    public function Index()
+    {
+        $this->loginView = $this->ctrlHelper->CreateView('LoginView');
+
+
+    }
 }

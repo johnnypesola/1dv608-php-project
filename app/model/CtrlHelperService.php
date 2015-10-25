@@ -13,6 +13,8 @@ class CtrlHelperService {
     private $appSettingsObj,
             $appObj;
 
+    public $parameters;
+
 // Constructor
     public function __construct($appObj, $appSettingsObj)
     {
@@ -21,15 +23,15 @@ class CtrlHelperService {
     }
 
 // Private methods
-    private function parseObjName($string)
+    private function ParseObjName($string)
     {
         return ucfirst(preg_replace("/[^A-Za-z]/","",$string));
     }
 
-    private function getController($controllerStr)
+    private function GetController($controllerStr)
     {
         // Parse string
-        $controllerStr = $this->parseObjName($controllerStr) . 'Ctrl';
+        $controllerStr = $this->ParseObjName($controllerStr) . 'Ctrl';
 
         // Create controller object
         $controllerObj = $this->createController($controllerStr);
@@ -43,10 +45,10 @@ class CtrlHelperService {
         return $controllerObj;
     }
 
-    private function getMethod($controllerObj, $methodStr)
+    private function GetMethod($controllerObj, $methodStr)
     {
         // Parse string
-        $methodStr = $this->parseObjName($methodStr);
+        $methodStr = $this->ParseObjName($methodStr);
 
         // Check if method exists, then we will use that method
         if(method_exists($controllerObj, $methodStr))
@@ -57,7 +59,7 @@ class CtrlHelperService {
         return $this->appSettingsObj->GetDefaultMethod();
     }
 
-    private function parseUrlToArray($url)
+    private function ParseUrlToArray($url)
     {
         $returnArray = [];
 
@@ -77,12 +79,20 @@ class CtrlHelperService {
     }
 
 // Public methods
-    public function processUrl($urlStr)
+    public function DoUrlParamsExist()
     {
-        $urlArray = $this->parseUrlToArray($urlStr);
+        return $this->parameters[0] !== "";
+    }
+
+    public function ProcessUrl($urlStr)
+    {
+        $urlArray = $this->ParseUrlToArray($urlStr);
 
         // Assign controller
-        $this->appObj->controllerObj = $this->getController($urlArray[0]);
+        $this->appObj->controllerObj = $this->GetController($urlArray[0]);
+
+        // Get and save controller string
+        $this->appObj->controllerStr = get_class($this->appObj->controllerObj);
 
         // Unset array key, for collecting leftover params later.
         unset($urlArray[0]);
@@ -91,7 +101,7 @@ class CtrlHelperService {
         if(isset($urlArray[1]))
         {
             // Assign method
-            $this->appObj->methodStr = $this->getMethod($this->appObj->controllerObj, $urlArray[1]);
+            $this->appObj->methodStr = $this->GetMethod($this->appObj->controllerObj, $urlArray[1]);
 
             unset($urlArray[1]);
         }
@@ -104,7 +114,7 @@ class CtrlHelperService {
         $this->parameters = isset($urlArray[2]) ? array_values($urlArray) : [];
     }
 
-    public function executeController($controllerObj, $methodStr, $parametersArray)
+    public function ExecuteController($controllerObj, $methodStr, $parametersArray)
     {
         // Call the controllers method with parameters.
         call_user_func_array([$controllerObj, $methodStr], $parametersArray);

@@ -9,7 +9,7 @@ namespace controller;
 
 class Controller
 {
-    private $ctrlHelper;
+    protected $ctrlHelper;
 
     public function __construct($ctrlHelper)
     {
