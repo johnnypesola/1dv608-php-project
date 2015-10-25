@@ -1,19 +1,23 @@
 <?php
-
+/**
+ * Created by jopes
+ * Date: 2015-10-25
+ * Time: 14:42
+ */
 
 namespace model;
 
 
-class UsersDAL extends ModelDAL {
+class GroupDAL extends ModelDAL {
 
-// Init variables
-    private static $DB_TABLE_NAME = 'user';
+    // Init variables
+    private static $DB_TABLE_NAME = 'group';
 
-    private static $DB_QUERY_ERROR = 'Error getting users from database';
-    private static $DB_GET_ERROR = 'Error getting user from database';
-    private static $DB_INSERT_ERROR = 'Error adding user to database';
-    private static $DB_UPDATE_ERROR = 'Error updating user in database';
-    private static $DB_USERNAME_EXISTS = 'User exists, pick another username.';
+    private static $DB_QUERY_ERROR = 'Error getting groups from database';
+    private static $DB_GET_ERROR = 'Error getting group from database';
+    private static $DB_INSERT_ERROR = 'Error adding group to database';
+    private static $DB_UPDATE_ERROR = 'Error updating group in database';
+    private static $DB_GROUP_NAME_EXISTS = 'Group exists, pick another group name.';
 
     private static $MAX_REGISTRATIONS_PER_HOUR = 30;
 
@@ -28,10 +32,10 @@ class UsersDAL extends ModelDAL {
             $returnArray = [];
 
             // Get data from database
-            foreach(self::$db->query('SELECT `user_id`, `user_name` FROM `' . self::$DB_TABLE_NAME  . '`') as $row ) {
+            foreach(self::$db->query('SELECT `group_id`, `group_name` FROM `' . self::$DB_TABLE_NAME  . '`') as $row ) {
 
-                // Create new user object from database row
-                $returnArray[] = new User($row['user_id'], $row['user_name'], $row['user_password']);
+                // Create new object from database row
+                $returnArray[] = new Group($row['group_id'], $row['group_name']);
             }
 
             return $returnArray;
@@ -42,26 +46,7 @@ class UsersDAL extends ModelDAL {
 
     }
 
-    public function GetAllWithPasswords() {
-
-        try {
-
-            $returnArray = [];
-
-            // Get data from database
-            foreach(self::$db->query('SELECT * FROM `' . self::$DB_TABLE_NAME  . '`') as $row ) {
-                $returnArray[] = $row;
-            }
-
-            return $returnArray;
-
-        } catch (\Exception $exception) {
-            throw new \Exception(self::$DB_QUERY_ERROR);
-        }
-
-    }
-
-    public function GetUserByUsername($username) {
+    public function GetGroupByName($groupName) {
 
         try {
 
@@ -109,7 +94,7 @@ class UsersDAL extends ModelDAL {
 
     }
 
-    public function Add(\model\User $user){
+    public function Add(\model\Group $group){
 
         if($this->GetRegistrationsForHour() > self::$MAX_REGISTRATIONS_PER_HOUR) {
             throw new \Exception("Max number of registrations per hour reached. Please try again in 30-60 minutes.");
@@ -149,60 +134,4 @@ class UsersDAL extends ModelDAL {
 
     }
 
-    public function AddPersistentLogin(\model\User $user) {
-
-        try {
-
-            // Assert that token is hashed
-            assert($user->IsTokenHashed());
-
-            // Assert that user has id
-            assert(is_numeric($user->GetUserId()));
-
-            // Prepare db statement
-            $statement = self::$db->prepare(
-                'UPDATE ' . self::$DB_TABLE_NAME .
-                ' SET `user_token_hash` = :token' .
-                ' WHERE `user_id` = :userId'
-            );
-
-            // Prepare input array
-            $inputArray = [
-                'userId' => $user->GetUserId(),
-                'token' => $user->GetToken()
-            ];
-
-            // Execute db statement
-            $statement->execute($inputArray);
-
-            // Check if db insertion was successful
-            return $statement->rowCount() == 1;
-
-        } catch (\Exception $exception) {
-            throw new \Exception(self::$DB_UPDATE_ERROR);
-        }
-    }
-
-    public function GetRegistrationsForHour() {
-
-        try {
-
-            // Prepare db statement
-            $statement = self::$db->prepare(
-                'SELECT * FROM ' . self::$DB_TABLE_NAME .
-                ' WHERE `date_time` LIKE \'' . date("Y-m-d H") . '%\''
-            );
-
-            // Execute db statement
-            $statement->execute();
-
-            // Fetch rows
-            $userRowsArray = $statement->fetchAll();
-
-            return sizeOf($userRowsArray);
-
-        } catch (\Exception $exception) {
-            throw new \Exception(self::$DB_QUERY_ERROR);
-        }
-    }
 } 

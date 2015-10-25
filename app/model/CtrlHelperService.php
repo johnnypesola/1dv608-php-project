@@ -65,6 +65,7 @@ class CtrlHelperService {
 
             // Remove excess whitespace and slashes
             $url = rtrim($url);
+            $url = ltrim($url, "/");
 
             // Sanitize url.
             $url = filter_var($url, FILTER_SANITIZE_URL);

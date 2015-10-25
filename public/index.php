@@ -5,6 +5,10 @@
  * Time: 13:20
  */
 
+print_r($_GET);
+
+echo '<br>';
+
 require_once '../app/init.php';
 
 $app = new \controller\AppCtrl();

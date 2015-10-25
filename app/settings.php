@@ -19,3 +19,4 @@
 
     // Uses a secure connection (HTTPS) if possible
     //ini_set('session.cookie_secure', 1);
+

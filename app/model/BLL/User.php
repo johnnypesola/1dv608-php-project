@@ -15,10 +15,9 @@ class User extends ModelBLL {
     private $passwordHashed = false;
     private $tokenHashed = false;
 
-    private static $userIdErrorMsg = "Invalid user id. It should be numeric and above 0.";
-
     private static $constraints = [
-        'username' => ['maxLength' => 30, 'throwException' => true],
+        'userId' => ['minValue' => 0, 'allowNull' => true],
+        'username' => ['maxLength' => 30],
         'password' => ['maxLength' => 30],
         'token' => ['maxLength' => 255]
     ];
@@ -45,13 +44,10 @@ class User extends ModelBLL {
     # UserId
     public function SetUserId($value) {
 
-        // Check if user id is valid
-        if(is_null($value) || is_numeric($value) && $value > 0) {
-
+        if($this->IsValidInt("userId", $value, self::$constraints["userId"]))
+        {
             // Set user id
             $this->userId = (int) $value;
-        } else {
-            throw new \Exception(self::$userIdErrorMsg);
         }
     }
 
