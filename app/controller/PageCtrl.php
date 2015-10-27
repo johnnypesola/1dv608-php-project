@@ -17,14 +17,15 @@ class PageCtrl extends Controller
 
     public function Show()
     {
-        if($this->ctrlHelper->DoUrlParamsExist())
+        if($this->ctrlHelper->DoesUrlParamsExist())
         {
             // Get specific page
+            echo 'params';
         }
         else
         {
             // Get startpage
-            
+            echo 'no params';
         }
     }
 } 

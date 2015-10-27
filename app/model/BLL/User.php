@@ -2,7 +2,6 @@
 
 namespace model;
 
-
 class User extends ModelBLL {
 
 // Init variables
@@ -37,6 +36,7 @@ class User extends ModelBLL {
         $this->SetPassword($password, $doHashPassword, $doCheckPassword);
         $this->SetToken($token, $doHashToken);
         $this->SetSignature();
+
     }
 
 // Getters and Setters

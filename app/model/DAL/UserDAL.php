@@ -4,7 +4,7 @@
 namespace model;
 
 
-class UsersDAL extends ModelDAL {
+class UserDAL extends ModelDAL {
 
 // Init variables
     private static $DB_TABLE_NAME = 'user';
@@ -123,10 +123,11 @@ class UsersDAL extends ModelDAL {
         }
 
         try {
+
             // Prepare db statement
             $statement = self::$db->prepare(
                 'INSERT INTO ' . self::$DB_TABLE_NAME  .
-                '(user_id, user_name, user_password, created)' .
+                ' (user_id, user_name, user_password, created)' .
                 ' VALUES ' .
                 '(NULL, :userName, :password, NOW())'
             );
@@ -205,4 +206,5 @@ class UsersDAL extends ModelDAL {
             throw new \Exception(self::$DB_QUERY_ERROR);
         }
     }
-} 
+
+}

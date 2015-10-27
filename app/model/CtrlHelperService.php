@@ -13,13 +13,16 @@ class CtrlHelperService {
     private $appSettingsObj,
             $appObj;
 
-    public $parameters;
+    public  $urlParameters = [],
+            $htmlView;
+    //public $postedData = [];
 
 // Constructor
     public function __construct($appObj, $appSettingsObj)
     {
         $this->appObj = $appObj;
         $this->appSettingsObj = $appSettingsObj;
+        $this->htmlView = $appObj->htmlView;
     }
 
 // Private methods
@@ -78,10 +81,37 @@ class CtrlHelperService {
         return $returnArray;
     }
 
-// Public methods
-    public function DoUrlParamsExist()
+    private function LoadFile($fileLocation)
     {
-        return $this->parameters[0] !== "";
+        if(file_exists($fileLocation))
+        {
+            require_once $fileLocation;
+            return true;
+        }
+        return false;
+    }
+
+// Public methods
+
+    public function RedirectTo($objOrString)
+    {
+        if(is_object($objOrString))
+        {
+            // Remove leading '\controller\' string and trailing 'Ctrl' string
+            $ctrlName = strtolower(preg_replace('/^(.*?)(controller\\\)(.*?)(Ctrl)$/', '$3', get_class($objOrString)));
+        }
+        else
+        {
+            $ctrlName = strtolower($objOrString);
+        }
+
+        header('Location: /' . $ctrlName);
+        die();
+    }
+
+    public function DoesUrlParamsExist()
+    {
+        return sizeof($this->urlParameters) > 0;
     }
 
     public function ProcessUrl($urlStr)
@@ -111,8 +141,20 @@ class CtrlHelperService {
         }
 
         // Assign the rest of the url as parameters with index starting at 0.
-        $this->parameters = isset($urlArray[2]) ? array_values($urlArray) : [];
+        $this->urlParameters = isset($urlArray[2]) ? array_values($urlArray) : [];
     }
+
+    /*
+    public function DoesPostedDataExist()
+    {
+        return sizeof($this->postedData) > 0;
+    }
+
+    public function ProcessPostedData($postedData)
+    {
+        $this->postedData = $postedData;
+    }
+    */
 
     public function ExecuteController($controllerObj, $methodStr, $parametersArray)
     {
@@ -120,15 +162,41 @@ class CtrlHelperService {
         call_user_func_array([$controllerObj, $methodStr], $parametersArray);
     }
 
+
+
+// Load methods
+
+    public function LoadController($controllerName)
+    {
+        return $this->LoadFile($this->appSettingsObj->GetControllerPath() . $controllerName . '.php');
+    }
+
+    public function LoadBLLModel($modelName)
+    {
+        return $this->LoadFile($this->appSettingsObj->GetModelPath() . 'BLL/' . $modelName . '.php');
+    }
+
+    public function LoadDALModel($modelName)
+    {
+        return $this->LoadFile($this->appSettingsObj->GetModelPath() . 'DAL/' . $modelName . '.php');
+    }
+
+    public function LoadService($serviceName)
+    {
+        return $this->LoadFile($this->appSettingsObj->GetModelPath() . $serviceName . '.php');
+    }
+
+    public function LoadView($viewName)
+    {
+        return $this->LoadFile($this->appSettingsObj->GetViewPath() . $viewName . '.php');
+    }
+
 // Create methods
+
     public function CreateController($controllerName)
     {
-        $fileLocation = $this->appSettingsObj->GetControllerPath() . $controllerName . '.php';
-
-        if(file_exists($fileLocation))
+        if($this->LoadController($controllerName))
         {
-            require_once $fileLocation;
-
             $controllerStr = $this->appSettingsObj->GetControllerNamespace() . $controllerName;
             return new $controllerStr($this);
         }
@@ -138,12 +206,8 @@ class CtrlHelperService {
 
     public function CreateBLLModel($modelName)
     {
-        $fileLocation = $this->appSettingsObj->GetModelPath() . 'BLL/' . $modelName . '.php';
-
-        if(file_exists($fileLocation))
+        if($this->LoadBLLModel($modelName))
         {
-            require_once $fileLocation;
-
             $modelStr = $this->appSettingsObj->GetModelNamespace() . $modelName;
             return new $modelStr;
         }
@@ -153,12 +217,8 @@ class CtrlHelperService {
 
     public function CreateDALModel($modelName)
     {
-        $fileLocation = $this->appSettingsObj->GetModelPath() . 'DAL/' . $modelName . '.php';
-
-        if(file_exists($fileLocation))
+        if($this->LoadDALModel($modelName))
         {
-            require_once $fileLocation;
-
             $modelStr = $this->appSettingsObj->GetModelNamespace() . $modelName;
             return new $modelStr;
         }
@@ -168,12 +228,8 @@ class CtrlHelperService {
 
     public function CreateService($serviceName)
     {
-        $fileLocation = $this->appSettingsObj->GetModelPath() . $serviceName . '.php';
-
-        if(file_exists($fileLocation))
+        if($this->LoadService($serviceName))
         {
-            require_once $fileLocation;
-
             $serviceStr = $this->appSettingsObj->GetModelNamespace() . $serviceName;
             return new $serviceStr;
         }
@@ -181,14 +237,10 @@ class CtrlHelperService {
         return false;
     }
 
-    public function CreateView($viewName, $data = [])
+    public function CreateView($viewName)
     {
-        $fileLocation = $this->appSettingsObj->GetViewPath() . $viewName . '.php';
-
-        if(file_exists($fileLocation))
+        if($this->LoadView($viewName))
         {
-            require_once $fileLocation;
-
             $viewStr = $this->appSettingsObj->GetViewNamespace() . $viewName;
             return new $viewStr;
         }

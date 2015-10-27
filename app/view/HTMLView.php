@@ -6,26 +6,37 @@ namespace view;
 class HtmlView extends View {
 
 // Init variables
-    private $pageTitle = '';
-    private $pageCharset = '';
-    private $pageHeader = '';
+    public $pageTitle = '';
+    public $pageCharset = 'utf-8';
+    public $pageHeader = '';
 
 // Constructor
-    public function __construct($pageTitle, $pageHeader, $pageCharset = 'utf-8') {
-
-        // Set values on object creation
-        $this->pageTitle = $pageTitle;
-        $this->pageHeader = $pageHeader;
-        $this->pageCharset = $pageCharset;
-
-
-    }
 
 // Public Methods
-    public function Render($output) {
+
+    public function GetUrl()
+    {
+
+        return isset($_GET['url']) ? $_GET['url'] : '';
+    }
+
+    public function HasUserPostedData()
+    {
+        return sizeof($_POST) > 0;
+    }
+
+    public function GetPostedData()
+    {
+        return $_POST;
+    }
+
+    public function Render($output)
+    {
 
         // Render page header
         $this->RenderHeader();
+
+        $this->RenderFlashMsg();
 
         // Render page output
         echo $output;
@@ -34,8 +45,14 @@ class HtmlView extends View {
         $this->RenderFooter();
     }
 
+
 // Private Methods
-    private function RenderHeader() {
+    private function RenderHeader()
+    {
+
+        echo $this->LoadTemplate('HeaderTpl');
+
+        /*
         echo '
         <!DOCTYPE html>
             <html>
@@ -50,18 +67,48 @@ class HtmlView extends View {
 
                 <div class="container" >
         ';
+        */
     }
 
-    private function RenderFooter() {
+    /*
+    private function RenderFlashMsg()
+    {
+        if(\model\FlashMessageService::DoesExist())
+        {
+            echo $this->LoadTemplate(
+                'MessageTpl',
+                [
+                    'messageType' => "success",
+                    'messageText' => \model\FlashMessageService::Get()
+                ]
+            );
+        }
+    }
+    */
+
+    private function RenderFlashMsg()
+    {
+        // Get validations errors if there are any
+        if(\model\FlashMessageService::DoesExist())
+        {
+            echo $this->LoadTemplate(
+                'MessageTpl',
+                \model\FlashMessageService::GetAll()
+            );
+        }
+    }
+
+    private function RenderFooter()
+    {
+
+        echo $this->LoadTemplate('FooterTpl');
+
+        /*
         echo $this->GetTimeOutput() . '
                 </div>
             </body>
         </html>
         ';
-
-    }
-
-    private function GetTimeOutput() {
-        return '<p>' . date('l, \t\h\e jS \o\f F Y, \T\h\e \t\i\m\e \i\s H:i:s') . '</p>';
+        */
     }
 }

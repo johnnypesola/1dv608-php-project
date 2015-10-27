@@ -18,12 +18,6 @@ class NavigationView extends view {
 
 // Public methods
 
-    public function GetUrl()
-    {
-
-        return isset($_GET['url']) ? $_GET['url'] : '';
-    }
-
 /*
     public function GetOutput() {
 

@@ -1,10 +1,10 @@
 
-<form action="" method="post">
+<form action="login/attempt" method="post">
     <label>Användarnamn</label>
-    <input name="username" type="text">
+    <input name="<?= $data['fieldNames']['username'] ?>" type="text">
     <label>Lösenord</label>
-    <input name="password" type="password">
+    <input name="<?= $data['fieldNames']['password'] ?>" type="password">
 
-    <input type="submit" name="submit" value="Logga in">
-    <?= $data['somedata'] ?>
+    <input type="submit" name="<?= $data['fieldNames']['submit'] ?>" value="Logga in">
+
 </form>

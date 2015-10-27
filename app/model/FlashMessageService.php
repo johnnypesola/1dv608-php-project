@@ -6,7 +6,7 @@ namespace model;
 abstract class FlashMessageService {
 
 // Init variables
-    private static $SESSION_COOKIE_NAME = 'flash_message';
+    private static $SESSION_COOKIE_NAME = 'flash_messages';
 
 
 // Public Methods
@@ -14,7 +14,7 @@ abstract class FlashMessageService {
         return isset($_SESSION[self::$SESSION_COOKIE_NAME]);
     }
 
-    static public function Get(){
+    static public function GetAll(){
 
         $returnValue = false;
 
@@ -30,7 +30,10 @@ abstract class FlashMessageService {
         return $returnValue;
     }
 
-    static public function Set($value) {
-        $_SESSION[self::$SESSION_COOKIE_NAME] = $value;
+    static public function Add($message, $type = 'success') {
+        $_SESSION[self::$SESSION_COOKIE_NAME][] = [
+            'message' => $message,
+            'type' => $type
+        ];
     }
 } 

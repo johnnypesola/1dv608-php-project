@@ -9,13 +9,12 @@ namespace controller;
 
 use model\CtrlHelperService;
 use model\AppSettings;
+use view\HtmlView;
 
 class AppCtrl extends Controller
 {
-    protected   $navigationView,
-                $urlService;
-
-    public      $controllerObj,
+    public      $htmlView,
+                $controllerObj,
                 $controllerStr,
                 $methodStr,
                 $parameters = [];
@@ -36,36 +35,36 @@ class AppCtrl extends Controller
     // Constructor
     public function __construct()
     {
+        // Setup html view
+        $this->htmlView = new HtmlView();
+        $this->htmlView->pageTitle = 'Fagersta Klätterklubb';
+        $this->htmlView->pageHeader = 'Välkommen till Fagersta Klätterklubb';
+
         // Setup app helper service
-        $this->appHelper = new CtrlHelperService(
+        $this->ctrlHelper = new CtrlHelperService(
             $this,
             new AppSettings(self::$APP_SETTINGS_ARRAY)
         );
 
         // Setup navigation view
-        $this->navigationView = new \view\NavigationView();
+        //$this->navigationView = $this->ctrlHelper->CreateView('NavigationView');
+
+        // Process user posted data, if such exists
+        /*
+        if($this->htmlView->HasUserPostedData())
+        {
+            $this->ctrlHelper->processPostedData($this->htmlView->GetPostedData());
+        }
+        */
 
         // Parse and process url
-        $this->appHelper->ProcessUrl($this->navigationView->GetUrl());
+        $this->ctrlHelper->ProcessUrl($this->htmlView->GetUrl());
 
         // Execute controller
-        $this->appHelper->ExecuteController($this->controllerObj, $this->methodStr, $this->parameters);
+        $this->ctrlHelper->ExecuteController($this->controllerObj, $this->methodStr, $this->parameters);
     }
 
     // Public methods
 
-
     // Private methods
-    private function printDebugInfo()
-    {
-        echo '<h3>Controller</h3><pre>';
-        print_r($this->controllerObj);
-        echo '</pre>';
-        echo '<h3>Method</h3><pre>';
-        print_r($this->methodStr);
-        echo '</pre>';
-        echo '<h3>Parameters</h3><pre>';
-        print_r($this->parameters);
-        echo '</pre>';
-    }
 }

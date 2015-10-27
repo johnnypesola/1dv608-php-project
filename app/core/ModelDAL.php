@@ -9,9 +9,9 @@ abstract class ModelDAL {
 
     private static $DB_SETTINGS = [
         "type" => "mysql",
-        "name" => "1DV608",
-        "username" => "1dv608",
-        "password" => "fHW5Sp8wzVySsJ5a",
+        "name" => "fagerstaklatterklubb",
+        "username" => "climber",
+        "password" => "3tzEnDQsVnBVGzWF",
         "charset" => "utf8",
         "host" => "localhost"
     ];

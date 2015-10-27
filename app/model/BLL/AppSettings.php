@@ -31,19 +31,19 @@ class AppSettings  extends ModelBLL {
             'regex' => '/[^a-z_\-0-9\/\.]/i'
         ],
         'controllerNamespace' => [
-            'regex' => '/[^a-z_\-0-9\/]/i'
+            'regex' => '/[^a-z_\-0-9\/\\\]/i'
         ],
         'modelPath' => [
             'regex' => '/[^a-z_\-0-9\/\.]/i'
         ],
         'modelNamespace' => [
-            'regex' => '/[^a-z_\-0-9\/]/i'
+            'regex' => '/[^a-z_\-0-9\/\\\]/i'
         ],
         'viewPath' => [
             'regex' => '/[^a-z_\-0-9\/\.]/i'
         ],
         'viewNamespace' => [
-            'regex' => '/[^a-z_\-0-9\/]/i'
+            'regex' => '/[^a-z_\-0-9\/\\\]/i'
         ]
     ];
 

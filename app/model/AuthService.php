@@ -19,7 +19,8 @@ class AuthService {
     public function __construct() {
 
         // Create users model
-        $this->users = new \model\UsersDAL();
+        $this->users = new \model\UserDAL();
+        $this->logins = new \model\LoginDAL();
     }
 
 // Getters and Setters
@@ -72,7 +73,7 @@ class AuthService {
 
     public function Authenticate(\model\User $user) {
 
-        if($this->users->GetUserLoginsForHour($user) > self::$MAX_LOGINS_PER_HOUR) {
+        if($this->logins->GetUserLoginsForHour($user) > self::$MAX_LOGINS_PER_HOUR) {
             throw new \Exception("Max login attempts for username '" . $user->GetUserName() . "' reached. Please try again in 30-60 minutes.");
         }
 
@@ -80,7 +81,7 @@ class AuthService {
         assert($user->IsPasswordHashed() == false);
 
         // Log this login attempt in DAL
-        $this->users->AddLoginAttempt($user);
+        $this->logins->Add($user);
 
         // Get user from database, if user exists
         $userFromDB = $this->users->GetUserByUsername($user->GetUserName());

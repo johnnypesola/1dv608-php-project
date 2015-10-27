@@ -17,21 +17,32 @@ class ValidationService {
 
 // Public Methods
 
-    public static function IsValid() {
+    public static function IsValid()
+    {
         return self::$isValid;
     }
 
-    public static function AddValidationError($errorMessage) {
+    public static function AddValidationError($errorMessage)
+    {
         self::$isValid = false;
 
         self::$validationErrorsArray[] = $errorMessage;
     }
 
-    public static function GetValidationErrors() {
+    public static function GetValidationErrors()
+    {
 
         // It should not be valid
         assert(self::$isValid == false);
 
         return self::$validationErrorsArray;
+    }
+
+    public static function ConvertErrorsToFlashMessages()
+    {
+        foreach(self::$validationErrorsArray as $errorMessage)
+        {
+            \model\FlashMessageService::Add($errorMessage, 'error');
+        }
     }
 } 
