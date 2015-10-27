@@ -31,7 +31,7 @@ class UserDAL extends ModelDAL {
             foreach(self::$db->query('SELECT `user_id`, `user_name` FROM `' . self::$DB_TABLE_NAME  . '`') as $row ) {
 
                 // Create new user object from database row
-                $returnArray[] = new User($row['user_id'], $row['user_name'], $row['user_password']);
+                $returnArray[] = new User($row['user_id'], $row['user_name']);
             }
 
             return $returnArray;

@@ -10,29 +10,43 @@ namespace controller;
 use model\AuthService;
 use view\LoginView;
 
-class LoginCtrl extends Controller
+class AuthCtrl extends Controller
 {
-    private $loginView,
-            $htmlView,
-            $auth;
-
-
     public function Index()
     {
         // Create view
-        $this->loginView = $this->ctrlHelper->CreateView('LoginView');
+        $loginView = $this->ctrlHelper->CreateView('LoginView');
 
         // Get output
-        $output = $this->loginView->GetOutput();
+        $output = $loginView->GetOutput();
 
         // Render page
         $this->ctrlHelper->htmlView->Render($output);
     }
 
-    public function Attempt()
+    public function Logout()
+    {
+        // Load file dependencies
+        $this->ctrlHelper->LoadBLLModel('User');
+        $this->ctrlHelper->LoadDALModel('UserDAL');
+        $this->ctrlHelper->LoadDALModel('LoginDAL');
+        $this->ctrlHelper->LoadService('UserClientService');
+
+        // Create Auth service
+        $auth = $this->ctrlHelper->CreateService('AuthService');
+
+        if($auth->IsUserLoggedIn())
+        {
+            $auth->ForgetUserLoggedIn();
+        }
+
+        $this->ctrlHelper->RedirectTo($this);
+    }
+
+    public function Login()
     {
         // Create view
-        $this->loginView = $this->ctrlHelper->CreateView('LoginView');
+        $loginView = $this->ctrlHelper->CreateView('LoginView');
 
         // Load file dependencies
         $this->ctrlHelper->LoadBLLModel('User');
@@ -41,19 +55,19 @@ class LoginCtrl extends Controller
         $this->ctrlHelper->LoadService('UserClientService');
 
         // Create Auth service
-        $this->auth = $this->ctrlHelper->CreateService('AuthService');
+        $auth = $this->ctrlHelper->CreateService('AuthService');
 
         // If user is already logged in
-        if($this->auth->IsUserLoggedIn())
+        if($auth->IsUserLoggedIn())
         {
-            $this->ctrlHelper->RedirectTo("User");
+            $this->ctrlHelper->RedirectTo("page");
         }
 
         // If user wants to login
-        if($this->loginView->UserWantsToLogin())
+        if($loginView->UserWantsToLogin())
         {
             // Get login attempt
-            $loginAttemptArray = $this->loginView->GetLoginAttempt();
+            $loginAttemptArray = $loginView->GetLoginAttempt();
 
             // Create new user from login attempt
             $loginAttemptUser = new \model\User(NULL, $loginAttemptArray['username'], $loginAttemptArray['password'], false);
@@ -62,12 +76,12 @@ class LoginCtrl extends Controller
             if(\model\ValidationService::IsValid()) {
 
                 // Try to authenticate user
-                if ($user = $this->auth->Authenticate($loginAttemptUser)) {
+                if ($user = $auth->Authenticate($loginAttemptUser)) {
 
                     // Store logged in user object in sessions cookie
-                    $this->auth->KeepUserLoggedInForSession($user);
+                    $auth->KeepUserLoggedInForSession($user);
 
-                    $this->ctrlHelper->RedirectTo("User");
+                    $this->ctrlHelper->RedirectTo("page");
 
                 } else {
 

@@ -242,7 +242,7 @@ class CtrlHelperService {
         if($this->LoadView($viewName))
         {
             $viewStr = $this->appSettingsObj->GetViewNamespace() . $viewName;
-            return new $viewStr;
+            return new $viewStr();
         }
 
         return false;

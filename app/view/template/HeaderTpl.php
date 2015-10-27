@@ -1,7 +1,7 @@
 <html>
     <header>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-        <link rel="stylesheet" type="text/css" href="css/style.css">
+        <link rel="stylesheet" type="text/css" href="http://nya.fagerstaklatterklubb.se/css/style.css">
         <title>
             Fagersta Klätterklubb
         </title>
@@ -9,6 +9,6 @@
     <body>
     <div id="wrapper">
         <div id="header">
-            <img id="logo" src="img/gfx/header_logo.png" />
+            <img id="logo" src="http://nya.fagerstaklatterklubb.se/img/gfx/header_logo.png" />
         </div>
 

@@ -1,6 +1,5 @@
-
         <div id="menu">
-            <img id="menu_mountain" src="img/gfx/menu_mountain.gif" />
-            <a href="/index.php?p=1" class="active">På gång</a>
-            <a href="/index.php?p=2" >Träningstider</a>
+            <?php foreach ($data as $d): ?>
+                <a href="http://nya.fagerstaklatterklubb.se/<?= $d['href'] ?>" class="active"><?= $d['name'] ?></a>
+            <?php endforeach; ?>
         </div>

@@ -8,7 +8,7 @@
 namespace model;
 
 
-class Page {
+class Page extends ModelBLL {
 
 // Init variables
     private $pageId;

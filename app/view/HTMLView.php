@@ -38,6 +38,8 @@ class HtmlView extends View {
 
         $this->RenderFlashMsg();
 
+        $this->RenderNavigation();
+
         // Render page output
         echo $output;
 
@@ -49,42 +51,22 @@ class HtmlView extends View {
 // Private Methods
     private function RenderHeader()
     {
-
         echo $this->LoadTemplate('HeaderTpl');
 
-        /*
-        echo '
-        <!DOCTYPE html>
-            <html>
-                <head>
-                <meta charset="' . $this->pageCharset . '">
-                <title>' . $this->pageTitle . '</title>
-                <link rel="stylesheet" href="css/style.css">
-            </head>
-            <body>
-                <h1>' . $this->pageHeader . '</h1>
-
-
-                <div class="container" >
-        ';
-        */
     }
 
-    /*
-    private function RenderFlashMsg()
+
+    private function RenderNavigation()
     {
-        if(\model\FlashMessageService::DoesExist())
-        {
-            echo $this->LoadTemplate(
-                'MessageTpl',
-                [
-                    'messageType' => "success",
-                    'messageText' => \model\FlashMessageService::Get()
-                ]
-            );
-        }
+        $navigationArray = [
+            ['name' => 'På gång', 'href' => ''],
+            ['name' => 'Logga in', 'href' => 'auth'],
+            ['name' => 'Logga ut', 'href' => 'auth/logout']
+        ];
+
+        echo $this->LoadTemplate('NavigationTpl', $navigationArray);
     }
-    */
+
 
     private function RenderFlashMsg()
     {
@@ -100,15 +82,6 @@ class HtmlView extends View {
 
     private function RenderFooter()
     {
-
         echo $this->LoadTemplate('FooterTpl');
-
-        /*
-        echo $this->GetTimeOutput() . '
-                </div>
-            </body>
-        </html>
-        ';
-        */
     }
 }
