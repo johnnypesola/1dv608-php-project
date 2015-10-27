@@ -6,7 +6,7 @@
         <br>
         <input type="submit" name="<?= $data['submitFieldName'] ?>" value="Spara">
 
-        <a href="http://nya.fagerstaklatterklubb.se/page/delete/<?= $data['pageId'] ?>">Radera sida</a>
+        <a class="button" href="http://nya.fagerstaklatterklubb.se/page/delete/<?= $data['pageId'] ?>">Radera sida</a>
     </div>
     <input type="hidden" name="<?= $data['pageIdFieldName'] ?>" value="<?= $data['pageId'] ?>">
 </form>

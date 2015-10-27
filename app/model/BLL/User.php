@@ -7,6 +7,8 @@ class User extends ModelBLL {
 // Init variables
     private $userId;
     private $userName;
+    private $firstName;
+    private $surName;
     private $password;
     private $token;
     private $signature;
@@ -17,6 +19,8 @@ class User extends ModelBLL {
     private static $constraints = [
         'userId' => ['minValue' => 0, 'allowNull' => true],
         'username' => ['maxLength' => 30],
+        'firstname' => ['maxLength' => 50, 'minLength' => 0],
+        'surname' => ['maxLength' => 50, 'minLength' => 0],
         'password' => ['maxLength' => 30],
         'token' => ['maxLength' => 255]
     ];
@@ -25,6 +29,8 @@ class User extends ModelBLL {
     public function __construct(
         $userId = null,
         $username,
+        $firstname = "",
+        $surname = "",
         $password = "",
         $doHashPassword = true,
         $doCheckPassword = true,
@@ -33,6 +39,8 @@ class User extends ModelBLL {
     ) {
         $this->SetUserId($userId);
         $this->SetUserName($username);
+        $this->SetFirstName($firstname);
+        $this->SetSurName($surname);
         $this->SetPassword($password, $doHashPassword, $doCheckPassword);
         $this->SetToken($token, $doHashToken);
         $this->SetSignature();
@@ -68,6 +76,36 @@ class User extends ModelBLL {
 
     public function GetUserName() {
         return $this->userName;
+    }
+
+    # FirstName
+    public function SetFirstName($value) {
+
+        // Check if value is valid
+        if($this->IsValidString("firstname", $value, self::$constraints["firstname"])) {
+
+            // Set value
+            $this->firstName = trim($value);
+        }
+    }
+
+    public function GetFirstName() {
+        return $this->firstName;
+    }
+
+    # SurName
+    public function SetSurName($value) {
+
+        // Check if value is valid
+        if($this->IsValidString("surname", $value, self::$constraints["surname"])) {
+
+            // Set value
+            $this->surName = trim($value);
+        }
+    }
+
+    public function GetSurName() {
+        return $this->surName;
     }
 
     # Password

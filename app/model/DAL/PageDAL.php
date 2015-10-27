@@ -47,7 +47,7 @@ class PageDAL extends ModelDAL
             $statement->execute($inputArray);
 
             // Check if db insertion was successful
-            return $statement->rowCount() == 1;
+            return self::$db->lastInsertId();
 
         } catch (\Exception $exception) {
             throw new \Exception(self::$DB_INSERT_ERROR);
@@ -124,22 +124,21 @@ class PageDAL extends ModelDAL
 
     }
 
-    public function Get($pageIdOrSlug = 0) {
+    public function Get($id = 0) {
 
         try {
 
             // Prepare db statement
             $statement = self::$db->prepare(
                 'SELECT * FROM ' . self::$DB_TABLE_NAME .
-                ' WHERE ' . (is_numeric($pageIdOrSlug) ? '`page_id` = :pageId' : '`slug` = :slug') .
+                ' WHERE ' . ($id != 0 ? '`page_id` = :pageId' : '1') .
                 ' LIMIT 1'
             );
 
             // Prepare input array
             $inputArray = [
-                (is_numeric($pageIdOrSlug) ? 'pageId' : 'slug') => $pageIdOrSlug
+                'pageId' => $id
             ];
-
 
             // Execute db statement
             $statement->execute($inputArray);
@@ -176,11 +175,15 @@ class PageDAL extends ModelDAL
         // Add page if ID is missing, update otherwise
         if(is_null($page->GetPageId()) || $page->GetPageId() == 0)
         {
-            $this->Add($page);
+            // Return insert id
+            return $this->Add($page);
         }
         else
         {
             $this->Update($page);
+
+            // Return page id
+            return $page->GetPageId();
         }
     }
 

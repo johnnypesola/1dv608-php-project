@@ -50,9 +50,6 @@ class AppCtrl extends Controller
         $this->ctrlHelper->LoadBLLModel('Page');
         $this->ctrlHelper->LoadDALModel('PageDAL');
 
-        // Setup navigation view
-        //$this->navigationView = $this->ctrlHelper->CreateView('NavigationView');
-
         // Parse and process url
         $this->ctrlHelper->ProcessUrl($this->htmlView->GetUrl());
 

@@ -7,14 +7,10 @@
 
 namespace controller;
 
-
 use model\Page;
 
 class PageCtrl extends Controller
 {
-    // Init variables
-    private static $STARTPAGE_SLUG = 'start';
-
     public function Index()
     {
         $this->Show();
@@ -29,10 +25,10 @@ class PageCtrl extends Controller
         $this->ctrlHelper->LoadDALModel('UserDAL');
         $this->ctrlHelper->LoadDALModel('LoginDAL');
 
+        // Create objects
         $pages = $this->ctrlHelper->CreateDALModel('PageDAL');
-
         $auth = $this->ctrlHelper->CreateService('AuthService');
-
+        
 
         if($this->ctrlHelper->DoesUrlParamsExist())
         {
@@ -45,7 +41,7 @@ class PageCtrl extends Controller
         else
         {
             // Get startpage
-            $page = $pages->Get(self::$STARTPAGE_SLUG);
+            $page = $pages->Get();
         }
 
         // Load page output
@@ -64,6 +60,7 @@ class PageCtrl extends Controller
         $this->ctrlHelper->LoadDALModel('UserDAL');
         $this->ctrlHelper->LoadDALModel('LoginDAL');
 
+        // Create objects
         $auth = $this->ctrlHelper->CreateService('AuthService');
 
         if($auth->IsUserLoggedIn())
@@ -76,6 +73,8 @@ class PageCtrl extends Controller
 
             // Get output
             $output = $pageView->GetOutput();
+
+            \model\FlashMessageService::Add("Enter information for the new page to be created.");
 
             // Render page
             $this->ctrlHelper->htmlView->Render($output, $auth->IsUserLoggedIn());
@@ -95,6 +94,7 @@ class PageCtrl extends Controller
         $this->ctrlHelper->LoadDALModel('UserDAL');
         $this->ctrlHelper->LoadDALModel('LoginDAL');
 
+        // Create objects
         $pages = $this->ctrlHelper->CreateDALModel('PageDAL');
         $auth = $this->ctrlHelper->CreateService('AuthService');
 
@@ -114,16 +114,29 @@ class PageCtrl extends Controller
                 $user->GetUsername()
             );
 
-            // Generate slug
-            $page->GenerateSlug();
+            // Check if there was validation errors
+            if(!\model\ValidationService::IsValid())
+            {
+                \model\ValidationService::ConvertErrorsToFlashMessages();
 
-            $pages->Save($page);
+                $pageId = $page->GetPageId();
+            }
+            // Save page
+            else
+            {
+                // Generate slug
+                $page->GenerateSlug();
 
-            \model\FlashMessageService::Add("Page successfully saved");
+                $pageId = $pages->Save($page);
 
+                \model\FlashMessageService::Add("Page successfully saved");
+            }
+
+            // Get controller name
             $ctrlName = $this->ctrlHelper->CtrlToString($this);
 
-            $this->ctrlHelper->RedirectTo($ctrlName . "/show/" . $page->GetPageId() . '/' . $page->GetSlug());
+            // Redirect
+            $this->ctrlHelper->RedirectTo($ctrlName . "/show/" . $pageId . '/' . $page->GetSlug());
         }
     }
 
@@ -133,6 +146,7 @@ class PageCtrl extends Controller
         $this->ctrlHelper->LoadDALModel('UserDAL');
         $this->ctrlHelper->LoadDALModel('LoginDAL');
 
+        // Create objects
         $pages = $this->ctrlHelper->CreateDALModel('PageDAL');
         $auth = $this->ctrlHelper->CreateService('AuthService');
 
@@ -141,12 +155,16 @@ class PageCtrl extends Controller
             // Get page id from params
             $pageId = $this->ctrlHelper->urlParameters[0];
 
+            // Create page to delete
             $page = new \model\Page($pageId);
 
+            // Delete page
             $pages->Delete($page);
 
+            // Display message to user
             \model\FlashMessageService::Add("Page successfully deleted");
 
+            // Redirect
             $this->ctrlHelper->RedirectTo($this);
         }
     }

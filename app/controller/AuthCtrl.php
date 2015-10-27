@@ -17,8 +17,52 @@ class AuthCtrl extends Controller
         // Create view
         $loginView = $this->ctrlHelper->CreateView('LoginView');
 
+        // Load file dependencies
+        $this->ctrlHelper->LoadDALModel('UserDAL');
+        $this->ctrlHelper->LoadDALModel('LoginDAL');
+        $this->ctrlHelper->LoadService('UserClientService');
+
+        // Create Auth service
+        $auth = $this->ctrlHelper->CreateService('AuthService');
+
         // Get output
         $output = $loginView->GetOutput();
+
+        // If user has a persistent login
+        if($loginView->IsLoginSavedOnClient() && !$auth->IsUserLoggedIn())
+        {
+            // Get client login info
+            $userInfoArray = $loginView->GetLoginSavedOnClient();
+
+            // Create new user object
+            $user = new \model\User(
+                NULL,
+                $userInfoArray['username'],
+                NULL,
+                NULL,
+                NULL,
+                false,
+                false,
+                $userInfoArray['token'],
+                false
+            );
+
+            // Try to auth persistent login user
+            if($auth->AuthenticatePersistent($user))
+            {
+                // Store logged in user object in sessions cookie
+                $auth->KeepUserLoggedInForSession($user);
+
+                \model\FlashMessageService::Add("Successfully logged in.");
+
+                $this->ctrlHelper->RedirectTo("page/show");
+            }
+            else
+            {
+                // Delete client persistent login data on failed auth
+                $loginView->DeleteLoginSavedOnClient();
+            }
+        }
 
         // Render page
         $this->ctrlHelper->htmlView->Render($output);
@@ -26,8 +70,10 @@ class AuthCtrl extends Controller
 
     public function Logout()
     {
+        // Create view
+        $loginView = $this->ctrlHelper->CreateView('LoginView');
+
         // Load file dependencies
-        $this->ctrlHelper->LoadBLLModel('User');
         $this->ctrlHelper->LoadDALModel('UserDAL');
         $this->ctrlHelper->LoadDALModel('LoginDAL');
         $this->ctrlHelper->LoadService('UserClientService');
@@ -37,8 +83,17 @@ class AuthCtrl extends Controller
 
         if($auth->IsUserLoggedIn())
         {
+            // Remove server stored login data
             $auth->ForgetUserLoggedIn();
+
+            // Remove client stored login data
+            if($loginView->IsLoginSavedOnClient())
+            {
+                $loginView->DeleteLoginSavedOnClient();
+            }
         }
+
+        \model\FlashMessageService::Add("Successfully logged out.");
 
         $this->ctrlHelper->RedirectTo($this);
     }
@@ -73,6 +128,8 @@ class AuthCtrl extends Controller
             $loginAttemptUser = new \model\User(
                 NULL,
                 $loginAttemptArray['username'],
+                "",
+                "",
                 $loginAttemptArray['password'],
                 false
             );
@@ -86,7 +143,17 @@ class AuthCtrl extends Controller
                     // Store logged in user object in sessions cookie
                     $auth->KeepUserLoggedInForSession($user);
 
-                    $this->ctrlHelper->RedirectTo("page");
+                    if($loginView->UserWantsLoginToBeRemembered())
+                    {
+                        // Save persistent login on server
+                        $auth->SaveLoginOnServer($user);
+
+                        $loginView->SaveLoginOnClient($user);
+                    }
+
+                    \model\FlashMessageService::Add("Successfully logged in.");
+
+                    $this->ctrlHelper->RedirectTo("page/show");
 
                 } else {
 

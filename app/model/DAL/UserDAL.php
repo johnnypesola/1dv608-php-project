@@ -28,29 +28,15 @@ class UserDAL extends ModelDAL {
             $returnArray = [];
 
             // Get data from database
-            foreach(self::$db->query('SELECT `user_id`, `user_name` FROM `' . self::$DB_TABLE_NAME  . '`') as $row ) {
+            foreach(self::$db->query('SELECT `user_id`, `user_name`, `user_firstname`, `user_surname` FROM `' . self::$DB_TABLE_NAME  . '`') as $row ) {
 
                 // Create new user object from database row
-                $returnArray[] = new User($row['user_id'], $row['user_name']);
-            }
-
-            return $returnArray;
-
-        } catch (\Exception $exception) {
-            throw new \Exception(self::$DB_QUERY_ERROR);
-        }
-
-    }
-
-    public function GetAllWithPasswords() {
-
-        try {
-
-            $returnArray = [];
-
-            // Get data from database
-            foreach(self::$db->query('SELECT * FROM `' . self::$DB_TABLE_NAME  . '`') as $row ) {
-                $returnArray[] = $row;
+                $returnArray[] = new User(
+                    $row['user_id'],
+                    $row['user_name'],
+                    $row['user_firstname'],
+                    $row['user_surname']
+                );
             }
 
             return $returnArray;
@@ -92,6 +78,8 @@ class UserDAL extends ModelDAL {
                 return new \model\User(
                     $userRowsArray[0]['user_id'],
                     $userRowsArray[0]['user_name'],
+                    $userRowsArray[0]['user_firstname'],
+                    $userRowsArray[0]['user_surname'],
                     $userRowsArray[0]['user_password'],
                     false,
                     false,
@@ -127,14 +115,16 @@ class UserDAL extends ModelDAL {
             // Prepare db statement
             $statement = self::$db->prepare(
                 'INSERT INTO ' . self::$DB_TABLE_NAME  .
-                ' (user_id, user_name, user_password, created)' .
+                ' (user_id, user_name, user_firstname, user_surname, user_password, created)' .
                 ' VALUES ' .
-                '(NULL, :userName, :password, NOW())'
+                '(NULL, :userName, :firstName, :surName, :password, NOW())'
             );
 
             // Prepare input array
             $inputArray = [
                 'userName' => $user->GetUserName(),
+                'firstName' => $user->GetFirstName(),
+                'surName' => $user->GetSurName(),
                 'password' => $user->GetPassword()
             ];
 

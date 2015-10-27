@@ -24,7 +24,7 @@ class Page extends ModelBLL {
         'header' => ['maxLength' => 100],
         'content' => ['maxLength' => 65535],
         'authorName' => ['maxLength' => 30],
-        'slug' => ['maxLength' => 100],
+        'slug' => ['maxLength' => 100, 'minLength' => 0],
         'created' => ['classType' => 'DateTime'],
         'modified' => ['classType' => 'DateTime'],
     ];
@@ -35,7 +35,7 @@ class Page extends ModelBLL {
         $header = "",
         $content = "",
         $authorName = "",
-        $slug = null,
+        $slug = "",
         $created = null,
         $modified = null
     ) {

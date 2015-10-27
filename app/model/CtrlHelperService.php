@@ -15,7 +15,6 @@ class CtrlHelperService {
 
     public  $urlParameters = [],
             $htmlView;
-    //public $postedData = [];
 
 // Constructor
     public function __construct($appObj, $appSettingsObj)

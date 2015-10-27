@@ -23,7 +23,7 @@ label {
 
 .flash_message p {
     border-radius: 3px;
-    margin: 10px 50px;
+    margin: 10px 250px;
     padding: 8px 10px;
     text-align: center;
 }
@@ -200,10 +200,14 @@ table th {
     text-align: left;
 }
 
-input[type=submit] {
-    margin: 10px 0;
+input[type=submit], a.button {
+    margin: 10px 70px;
     border-radius: 5px;
     padding: 5px 10px;
     cursor: pointer;
     border: 1px solid #999999;
+    background: #DDDDDD;
+    color: #000000;
+    font-size: 14px;
+    text-decoration: none;
 }

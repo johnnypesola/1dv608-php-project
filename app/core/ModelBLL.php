@@ -15,7 +15,7 @@ class ModelBLL {
             $constraints['maxLength'] = 100;
         }
         if(!isset($constraints['regex'])) {
-            $constraints['regex'] = '/[^a-z_\-0-9]/i';
+            $constraints['regex'] = '/[^a-z_\-0-9åäöÅÄÖ!?#$@%&\=´`~^éèëÊËÈÉ+\/.,_*\'" ]/i';
         }
         // Do not throw exception as default
         if(!isset($constraints['throwException'])) {
