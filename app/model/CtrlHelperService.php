@@ -97,8 +97,7 @@ class CtrlHelperService {
     {
         if(is_object($objOrString))
         {
-            // Remove leading '\controller\' string and trailing 'Ctrl' string
-            $ctrlName = strtolower(preg_replace('/^(.*?)(controller\\\)(.*?)(Ctrl)$/', '$3', get_class($objOrString)));
+            $ctrlName = $this->CtrlToString($objOrString);
         }
         else
         {
@@ -107,6 +106,12 @@ class CtrlHelperService {
 
         header('Location: /' . $ctrlName);
         die();
+    }
+
+    public function CtrlToString($CtrlObj)
+    {
+        // Remove leading '\controller\' string and trailing 'Ctrl' string
+        return strtolower(preg_replace('/^(.*?)(controller\\\)(.*?)(Ctrl)$/', '$3', get_class($CtrlObj)));
     }
 
     public function DoesUrlParamsExist()
@@ -143,18 +148,6 @@ class CtrlHelperService {
         // Assign the rest of the url as parameters with index starting at 0.
         $this->urlParameters = isset($urlArray[2]) ? array_values($urlArray) : [];
     }
-
-    /*
-    public function DoesPostedDataExist()
-    {
-        return sizeof($this->postedData) > 0;
-    }
-
-    public function ProcessPostedData($postedData)
-    {
-        $this->postedData = $postedData;
-    }
-    */
 
     public function ExecuteController($controllerObj, $methodStr, $parametersArray)
     {

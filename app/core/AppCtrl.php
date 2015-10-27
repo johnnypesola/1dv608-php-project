@@ -46,16 +46,12 @@ class AppCtrl extends Controller
             new AppSettings(self::$APP_SETTINGS_ARRAY)
         );
 
+        // Load global requirements
+        $this->ctrlHelper->LoadBLLModel('Page');
+        $this->ctrlHelper->LoadDALModel('PageDAL');
+
         // Setup navigation view
         //$this->navigationView = $this->ctrlHelper->CreateView('NavigationView');
-
-        // Process user posted data, if such exists
-        /*
-        if($this->htmlView->HasUserPostedData())
-        {
-            $this->ctrlHelper->processPostedData($this->htmlView->GetPostedData());
-        }
-        */
 
         // Parse and process url
         $this->ctrlHelper->ProcessUrl($this->htmlView->GetUrl());

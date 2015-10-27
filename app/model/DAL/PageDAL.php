@@ -110,6 +110,7 @@ class PageDAL extends ModelDAL
                     $row['header'],
                     $row['content'],
                     $row['author_name'],
+                    $row['slug'],
                     $row['created'],
                     $row['modified']
                 );
@@ -172,6 +173,7 @@ class PageDAL extends ModelDAL
 
     public function Save(Page $page)
     {
+        // Add page if ID is missing, update otherwise
         if(is_null($page->GetPageId()) || $page->GetPageId() == 0)
         {
             $this->Add($page);

@@ -52,16 +52,34 @@ class HtmlView extends View {
     private function RenderHeader()
     {
         echo $this->LoadTemplate('HeaderTpl');
-
     }
 
 
     private function RenderNavigation($isAuthorized = false)
     {
-        $navigationArray = [
-            ['name' => 'På gång', 'href' => ''],
-            ($isAuthorized ? ['name' => 'Logga ut', 'href' => 'auth/logout'] : ['name' => 'Logga in', 'href' => 'auth'])
-        ];
+        $pages = new \model\PageDAL();
+
+        // Add all pages to navigation array
+        foreach($pages->GetAll() as $page)
+        {
+            $navigationArray[] = [
+                'name' => $page->GetHeader(),
+                'href' => 'page/show/' . $page->GetPageId() . '/' . $page->GetSlug()
+            ];
+        }
+
+        // Add extra pages when authenticated
+        if($isAuthorized)
+        {
+            $navigationArray[] = ['name' => 'Skapa sida', 'href' => 'page/create'];
+            $navigationArray[] = ['name' => 'Logga ut', 'href' => 'auth/logout'];
+        }
+        else
+        {
+            $navigationArray[] = ['name' => 'Logga in', 'href' => 'auth'];
+        }
+
+
 
         echo $this->LoadTemplate('NavigationTpl', $navigationArray);
     }

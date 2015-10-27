@@ -10,6 +10,7 @@ namespace view;
 
 class PageView extends View {
 
+
     // Init values
     private static $SUBMIT_INPUT_NAME = 'submit';
     private static $HEADER_INPUT_NAME = 'header';
@@ -19,7 +20,7 @@ class PageView extends View {
     // Constructor
     public function __construct()
     {
-        
+
     }
 
     // Public methods
@@ -29,7 +30,6 @@ class PageView extends View {
             'pageId' => $page->GetPageId(),
             'header' => $page->GetHeader(),
             'content' => $page->GetContent(),
-            'slug' => $page->GetSlug(),
             'pageIdFieldName' => self::$PAGE_ID_INPUT_NAME,
             'headerFieldName' => self::$HEADER_INPUT_NAME,
             'contentFieldName' => self::$CONTENT_INPUT_NAME,
@@ -42,21 +42,25 @@ class PageView extends View {
         );
     }
 
-    public function GetPageToSave()
+    public function LoadCreatePage()
     {
-        // Assert that user actually wants to login.
-        assert($this->UserWantsToSavePage());
+        $pageArray = [
+            'pageIdFieldName' => self::$PAGE_ID_INPUT_NAME,
+            'headerFieldName' => self::$HEADER_INPUT_NAME,
+            'contentFieldName' => self::$CONTENT_INPUT_NAME,
+            'submitFieldName' => self::$SUBMIT_INPUT_NAME
+        ];
 
+        $this->output .= $this->LoadTemplate('PageCreateTpl', $pageArray);
+    }
+
+    public function GetPageInfo()
+    {
         // Return array with info.
         return array(
-            'pageId' => $_POST[self::$PAGE_ID_INPUT_NAME],
+            'pageId' => (isset($_POST[self::$PAGE_ID_INPUT_NAME]) ? $_POST[self::$PAGE_ID_INPUT_NAME] : 0),
             'header' => $_POST[self::$HEADER_INPUT_NAME],
             'content' => $_POST[self::$CONTENT_INPUT_NAME]
         );
-    }
-
-    public function UserWantsToSavePage()
-    {
-        return isset($_POST[self::$HEADER_INPUT_NAME]) && isset($_POST[self::$CONTENT_INPUT_NAME]);
     }
 }

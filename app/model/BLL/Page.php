@@ -156,5 +156,16 @@ class Page extends ModelBLL {
 
 // Public Methods
 
+    public function GenerateSlug()
+    {
+        $string = $this->GetHeader();
 
-} 
+        # special accents
+        $svSpecial = array('å','ä','ö','Å','Ä','Ö','é','É','ó','Ó');
+        $svReplacement = array('a','a','o','a','a','o','e','e','o','o');
+        $string = strtolower(preg_replace(array('/[^a-zA-Z0-9 -]/','/[ -]+/','/^-|-$/'),array('','-',''),str_replace($svSpecial, $svReplacement, $string)));
+
+        // Set slug
+        $this->SetSlug($string);
+    }
+}

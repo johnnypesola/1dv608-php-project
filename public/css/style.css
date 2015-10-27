@@ -15,6 +15,12 @@ textarea {
     height: 300px;
 }
 
+label {
+    display: inline-block;
+    width: 150px;
+}
+
+
 .flash_message p {
     border-radius: 3px;
     margin: 10px 50px;
