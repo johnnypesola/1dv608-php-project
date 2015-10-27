@@ -8,7 +8,8 @@
 namespace model;
 
 
-class PageDAL {
+class PageDAL extends ModelDAL
+{
 
 // Init variables
     private static $DB_TABLE_NAME = 'page';
@@ -20,6 +21,77 @@ class PageDAL {
     private static $DB_DELETE_ERROR = 'Error removing page from database';
 
 // Constructor
+
+// Private Methods
+
+    private function Add(Page $page)
+    {
+        try {
+            // Prepare db statement
+            $statement = self::$db->prepare(
+                'INSERT INTO ' . self::$DB_TABLE_NAME  .
+                '(page_id, header, content, author_name, slug, created, modified)' .
+                ' VALUES ' .
+                '(NULL, :header, :content, :author_name, :slug, NOW(), NOW())'
+            );
+
+            // Prepare input array
+            $inputArray = [
+                'header' => $page->GetHeader(),
+                'content' => $page->GetContent(),
+                'author_name' => $page->GetAuthorName(),
+                'slug' => $page->GetSlug()
+            ];
+
+            // Execute db statement
+            $statement->execute($inputArray);
+
+            // Check if db insertion was successful
+            return $statement->rowCount() == 1;
+
+        } catch (\Exception $exception) {
+            throw new \Exception(self::$DB_INSERT_ERROR);
+        }
+    }
+
+    private function Update(Page $page)
+    {
+        // Assert that page has id
+        assert(!is_null($page->GetPageId()));
+
+        try {
+            // Prepare db statement
+            $statement = self::$db->prepare(
+                'UPDATE ' . self::$DB_TABLE_NAME .
+                ' SET ' .
+                '`header` = :header, ' .
+                '`content` = :content, ' .
+                '`author_name` = :author_name, ' .
+                '`slug` = :slug, ' .
+                '`modified` = NOW() ' .
+                ' WHERE page_id = :pageId' .
+                ' LIMIT 1'
+            );
+
+            // Prepare input array
+            $inputArray = [
+                'pageId' => $page->GetPageId(),
+                'header' => $page->GetHeader(),
+                'content' => $page->GetContent(),
+                'author_name' => $page->GetAuthorName(),
+                'slug' => $page->GetSlug()
+            ];
+
+            // Execute db statement
+            $statement->execute($inputArray);
+
+            // Check if db deletion was successful
+            return $statement->rowCount() == 1;
+
+        } catch (\Exception $exception) {
+            throw new \Exception(self::$DB_UPDATE_ERROR);
+        }
+    }
 
 // Public Methods
 
@@ -51,26 +123,28 @@ class PageDAL {
 
     }
 
-    public function Get($pageId) {
+    public function Get($pageIdOrSlug = 0) {
 
         try {
 
             // Prepare db statement
             $statement = self::$db->prepare(
                 'SELECT * FROM ' . self::$DB_TABLE_NAME .
-                ' WHERE `page_id` = :pageId'
+                ' WHERE ' . (is_numeric($pageIdOrSlug) ? '`page_id` = :pageId' : '`slug` = :slug') .
+                ' LIMIT 1'
             );
 
             // Prepare input array
             $inputArray = [
-                'pageId' => $pageId
+                (is_numeric($pageIdOrSlug) ? 'pageId' : 'slug') => $pageIdOrSlug
             ];
+
 
             // Execute db statement
             $statement->execute($inputArray);
 
             // Fetch rows
-            $row = $statement->fetchAll();
+            $row = $statement->fetch();
 
             // Return found user or false
             if (sizeof($row) > 0) {
@@ -81,6 +155,7 @@ class PageDAL {
                     $row['header'],
                     $row['content'],
                     $row['author_name'],
+                    $row['slug'],
                     $row['created'],
                     $row['modified']
                 );
@@ -95,34 +170,19 @@ class PageDAL {
 
     }
 
-    public function Add(Page $page)
+    public function Save(Page $page)
     {
-        try {
-            // Prepare db statement
-            $statement = self::$db->prepare(
-                'INSERT INTO ' . self::$DB_TABLE_NAME  .
-                '(page_id, header, content, author_name, created, modified)' .
-                ' VALUES ' .
-                '(NULL, :header, :content, :author_name, NOW(), NOW())'
-            );
-
-            // Prepare input array
-            $inputArray = [
-                'header' => $page->GetHeader(),
-                'content' => $page->GetContent(),
-                'author_name' => $page->GetAuthorName(),
-            ];
-
-            // Execute db statement
-            $statement->execute($inputArray);
-
-            // Check if db insertion was successful
-            return $statement->rowCount() == 1;
-
-        } catch (\Exception $exception) {
-            throw new \Exception(self::$DB_INSERT_ERROR);
+        if(is_null($page->GetPageId()) || $page->GetPageId() == 0)
+        {
+            $this->Add($page);
+        }
+        else
+        {
+            $this->Update($page);
         }
     }
+
+
 
     public function Delete(Page $page)
     {
@@ -153,40 +213,5 @@ class PageDAL {
         }
     }
 
-    public function Update(Page $page)
-    {
-        // Assert that page has id
-        assert(!is_null($page->GetPageId()));
 
-        try {
-            // Prepare db statement
-            $statement = self::$db->prepare(
-                'UPDATE ' . self::$DB_TABLE_NAME .
-                ' SET ' .
-                '`header` = :header, ' .
-                '`content` = :content, ' .
-                '`author_name` = :author_name, ' .
-                '`modified` = NOW(), ' .
-                ' WHERE page_id = :pageId' .
-                ' LIMIT 1'
-            );
-
-            // Prepare input array
-            $inputArray = [
-                'pageId' => $page->GetPageId(),
-                'header' => $page->GetHeader(),
-                'content' => $page->GetContent(),
-                'author_name' => $page->GetAuthorName()
-            ];
-
-            // Execute db statement
-            $statement->execute($inputArray);
-
-            // Check if db deletion was successful
-            return $statement->rowCount() == 1;
-
-        } catch (\Exception $exception) {
-            throw new \Exception(self::$DB_UPDATE_ERROR);
-        }
-    }
 } 

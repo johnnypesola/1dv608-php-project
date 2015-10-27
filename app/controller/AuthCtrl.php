@@ -70,7 +70,12 @@ class AuthCtrl extends Controller
             $loginAttemptArray = $loginView->GetLoginAttempt();
 
             // Create new user from login attempt
-            $loginAttemptUser = new \model\User(NULL, $loginAttemptArray['username'], $loginAttemptArray['password'], false);
+            $loginAttemptUser = new \model\User(
+                NULL,
+                $loginAttemptArray['username'],
+                $loginAttemptArray['password'],
+                false
+            );
 
             // If there are no validation errors, proceed.
             if(\model\ValidationService::IsValid()) {

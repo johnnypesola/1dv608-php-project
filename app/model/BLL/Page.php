@@ -15,6 +15,7 @@ class Page extends ModelBLL {
     private $header;
     private $content;
     private $authorName;
+    private $slug;
     private $created;
     private $modified;
 
@@ -22,7 +23,8 @@ class Page extends ModelBLL {
         'pageId' => ['minValue' => 0, 'allowNull' => true],
         'header' => ['maxLength' => 100],
         'content' => ['maxLength' => 65535],
-        'authorName' => ['maxLength' => 16],
+        'authorName' => ['maxLength' => 30],
+        'slug' => ['maxLength' => 100],
         'created' => ['classType' => 'DateTime'],
         'modified' => ['classType' => 'DateTime'],
     ];
@@ -33,6 +35,7 @@ class Page extends ModelBLL {
         $header = "",
         $content = "",
         $authorName = "",
+        $slug = null,
         $created = null,
         $modified = null
     ) {
@@ -40,6 +43,7 @@ class Page extends ModelBLL {
         $this->SetHeader($header);
         $this->SetContent($content);
         $this->SetAuthorName($authorName);
+        $this->SetSlug($slug);
     }
 
 // Getters and Setters
@@ -116,6 +120,21 @@ class Page extends ModelBLL {
 
     public function GetCreated() {
         return $this->created;
+    }
+
+    # slug
+    public function SetSlug($value) {
+
+        // Check if value is valid
+        if($this->IsValidString("slug", $value, self::$constraints["slug"])) {
+
+            // Set value
+            $this->slug = $value;
+        }
+    }
+
+    public function GetSlug() {
+        return $this->slug;
     }
 
     # modified

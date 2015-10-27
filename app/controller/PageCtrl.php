@@ -24,9 +24,10 @@ class PageCtrl extends Controller
 
         // Load file dependencies
         $this->ctrlHelper->LoadBLLModel('Page');
-        $this->ctrlHelper->LoadDALModel('PageDAL');
         $this->ctrlHelper->LoadDALModel('UserDAL');
         $this->ctrlHelper->LoadDALModel('LoginDAL');
+
+        $pages = $this->ctrlHelper->CreateDALModel('PageDAL');
 
         $auth = $this->ctrlHelper->CreateService('AuthService');
 
@@ -39,7 +40,7 @@ class PageCtrl extends Controller
         else
         {
             // Get startpage
-            $page = new Page(null, "På gång", "Här händer det grejer");
+            $page = $pages->Get('start');
         }
 
         // Load page output
@@ -49,6 +50,44 @@ class PageCtrl extends Controller
         $output = $pageView->GetOutput();
 
         // Render page
-        $this->ctrlHelper->htmlView->Render($output);
+        $this->ctrlHelper->htmlView->Render($output, $auth->IsUserLoggedIn());
     }
-} 
+
+
+    public function Save()
+    {
+        // Create view
+        $pageView = $this->ctrlHelper->CreateView('PageView');
+
+        // Load file dependencies
+        $this->ctrlHelper->LoadBLLModel('Page');
+        $this->ctrlHelper->LoadDALModel('UserDAL');
+        $this->ctrlHelper->LoadDALModel('LoginDAL');
+
+        $pages = $this->ctrlHelper->CreateDALModel('PageDAL');
+        $auth = $this->ctrlHelper->CreateService('AuthService');
+
+        if($auth->IsUserLoggedIn())
+        {
+            $pageInfoArray = $pageView->GetPageToSave();
+
+            // Get logged in user
+            $user = $auth->GetLoggedInUser();
+
+            // Create new page
+            $page = new \model\Page(
+                $pageInfoArray['pageId'],
+                $pageInfoArray['header'],
+                $pageInfoArray['content'],
+                $user->GetUsername(),
+                $this->ctrlHelper->urlParameters[0]
+            );
+
+            $pages->Save($page);
+
+            \model\FlashMessageService::Add("Page sucessfully saved");
+
+            $this->ctrlHelper->RedirectTo($this);
+        }
+    }
+}

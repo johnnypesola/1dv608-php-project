@@ -35,7 +35,7 @@ abstract class ModelDAL {
 
         try {
             // Setup DSN string
-            $dsn = self::$DB_SETTINGS['type'] . ':dbname=' . self::$DB_SETTINGS['name'] . ';host=' . self::$DB_SETTINGS['host'];
+            $dsn = self::$DB_SETTINGS['type'] . ':dbname=' . self::$DB_SETTINGS['name'] . ';host=' . self::$DB_SETTINGS['host'] . ';charset=' . self::$DB_SETTINGS['charset'];
 
             // Connect to an ODBC database using driver invocation
             self::$db = new \PDO(

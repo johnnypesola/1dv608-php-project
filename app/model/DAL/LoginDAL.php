@@ -8,7 +8,8 @@
 namespace model;
 
 
-class LoginDAL extends ModelDAL {
+class LoginDAL extends ModelDAL
+{
 
 // Init variables
     private static $DB_TABLE_NAME = 'login';

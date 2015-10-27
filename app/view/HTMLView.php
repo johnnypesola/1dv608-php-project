@@ -30,7 +30,7 @@ class HtmlView extends View {
         return $_POST;
     }
 
-    public function Render($output)
+    public function Render($output, $isAuthorized = false)
     {
 
         // Render page header
@@ -38,7 +38,7 @@ class HtmlView extends View {
 
         $this->RenderFlashMsg();
 
-        $this->RenderNavigation();
+        $this->RenderNavigation($isAuthorized);
 
         // Render page output
         echo $output;
@@ -56,12 +56,11 @@ class HtmlView extends View {
     }
 
 
-    private function RenderNavigation()
+    private function RenderNavigation($isAuthorized = false)
     {
         $navigationArray = [
             ['name' => 'På gång', 'href' => ''],
-            ['name' => 'Logga in', 'href' => 'auth'],
-            ['name' => 'Logga ut', 'href' => 'auth/logout']
+            ($isAuthorized ? ['name' => 'Logga ut', 'href' => 'auth/logout'] : ['name' => 'Logga in', 'href' => 'auth'])
         ];
 
         echo $this->LoadTemplate('NavigationTpl', $navigationArray);

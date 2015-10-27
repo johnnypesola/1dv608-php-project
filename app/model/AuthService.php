@@ -113,7 +113,7 @@ class AuthService {
         return isset($_SESSION[self::$SESSION_LOGGED_IN_USER_COOKIE_NAME]);
     }
 
-    public function isSessionHijacked() {
+    public function IsSessionHijacked() {
 
         // Only check if user is logged in
         if($this->IsUserLoggedIn()) {
@@ -168,6 +168,11 @@ class AuthService {
 
             return $returnValue;
         }
+    }
+
+    public function GetLoggedInUser()
+    {
+        return $_SESSION[self::$SESSION_LOGGED_IN_USER_COOKIE_NAME];
     }
 
 } 
