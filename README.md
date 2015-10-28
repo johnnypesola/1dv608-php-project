@@ -4,7 +4,7 @@
 
 ##Secure MVC Framework for Fagersta Klätterklubb (Fagersta Climbing Society).
 
-### Background and presentation
+### Vision
 
 Fagersta klätterklubb (Fagersta Climbing Society) has been in need for a new backend for their homepage.   
 The society currently has a very static backend containing two static pages which can be edited. They have   
