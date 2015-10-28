@@ -1,5 +1,7 @@
 # 1dv608-php-project
 
+Author: Johnny Pesola 2015
+
 #Project presentation
 
 ##Secure MVC Framework for Fagersta Klätterklubb (Fagersta Climbing Society).
