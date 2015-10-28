@@ -96,7 +96,7 @@ class HtmlView extends View {
 
             echo $this->LoadTemplate(
                 'MessageTpl',
-                \model\ExceptionsService::GetLastExceptionMessage()
+                [\model\ExceptionsService::GetLastExceptionMessage()]
             );
         }
 

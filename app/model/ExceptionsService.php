@@ -20,24 +20,23 @@ class ExceptionsService {
     }
 
     static public function GetLastExceptionMessage() {
-        $error = end(self::$exceptions);
+        $exception = end(self::$exceptions);
 
-        return $error->getMessage();
-    }
+        return [
+            'message' => $exception->getMessage(),
+            'type' => 'error'
+        ];
 
-    static public function GetLastException() {
-        return end(self::$exceptions);
-    }
-
-    static public function GetAllExceptions() {
-        return self::$exceptions;
     }
 
     static public function GetAllExceptionMessages() {
         $messagesArray = [];
 
         foreach (self::$exceptions as $exception) {
-            $messagesArray[] = $exception->getMessage();
+            $messagesArray[] = [
+                'message' => $exception->getMessage(),
+                'type' => 'error'
+            ];;
         }
 
         return $messagesArray;

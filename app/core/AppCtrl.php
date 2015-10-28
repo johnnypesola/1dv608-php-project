@@ -61,6 +61,8 @@ class AppCtrl extends Controller
         {
             // Store exceptions in applications exceptions container model
             \Model\ExceptionsService::AddException($exception);
+
+            $this->htmlView->Render("");
         }
     }
 
