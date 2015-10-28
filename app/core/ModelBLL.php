@@ -300,6 +300,10 @@ class ModelBLL {
             }
 
             ValidationService::AddValidationError($constraints['notClassTypeMsg']);
+
+            return false;
         }
+
+        return true;
     }
 } 

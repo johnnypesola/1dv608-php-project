@@ -36,4 +36,9 @@ abstract class FlashMessageService {
             'type' => $type
         ];
     }
+
+    static public function Clear()
+    {
+        unset($_SESSION[self::$SESSION_COOKIE_NAME]);
+    }
 } 

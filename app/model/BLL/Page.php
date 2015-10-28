@@ -25,8 +25,8 @@ class Page extends ModelBLL {
         'content' => ['maxLength' => 65535],
         'authorName' => ['maxLength' => 30],
         'slug' => ['maxLength' => 100, 'minLength' => 0],
-        'created' => ['classType' => 'DateTime'],
-        'modified' => ['classType' => 'DateTime'],
+        'created' => ['classType' => 'DateTime', 'allowNull' => true],
+        'modified' => ['classType' => 'DateTime', 'allowNull' => true]
     ];
 
 // Constructor
@@ -44,6 +44,8 @@ class Page extends ModelBLL {
         $this->SetContent($content);
         $this->SetAuthorName($authorName);
         $this->SetSlug($slug);
+        $this->SetCreated($created);
+        $this->SetModified($modified);
     }
 
 // Getters and Setters
