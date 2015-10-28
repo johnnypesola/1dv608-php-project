@@ -1,5 +1,7 @@
 #Requirement specification 
 
+Author: Johnny Pesola 2015
+
 ##Secure MVC Framework for Fagersta Klätterklubb (Fagersta Climbing Society).
 
 #UC1 User logs in and adds page
