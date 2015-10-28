@@ -42,5 +42,4 @@ location / {
 }
 ```
 
-Allthough its not tested, the application should be able to run on apache2 for windows any further configuration.
 
