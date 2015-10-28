@@ -55,6 +55,7 @@ class AppCtrl extends Controller
 
         // Execute controller
         $this->ctrlHelper->ExecuteController($this->controllerObj, $this->methodStr, $this->parameters);
+
     }
 
     // Public methods

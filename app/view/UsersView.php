@@ -11,11 +11,6 @@ namespace view;
 class UsersView extends View
 {
     // Init values
-    /*
-    private static $SUBMIT_INPUT_NAME = 'submit';
-    private static $USERNAME_INPUT_NAME = 'username';
-    private static $PASSWORD_INPUT_NAME = 'password';
-    */
 
     // Constructor
     public function __construct()
@@ -24,7 +19,6 @@ class UsersView extends View
     }
 
     // Private methods
-
 
     // Public methods
 
@@ -35,7 +29,9 @@ class UsersView extends View
         {
             $usersArray[] = [
                 'userId' => $user->GetUserId(),
-                'username' => $user->GetUsername()
+                'username' => $user->GetUsername(),
+                'firstName' => $user->GetFirstName(),
+                'surName' => $user->GetSurName()
             ];
         }
 

@@ -5,7 +5,7 @@ namespace model;
 
 class ModelBLL {
 
-    protected function IsValidString($stringName, $stringContent, $constraints = []) {
+    public function IsValidString($stringName, $stringContent, $constraints = []) {
 
         // Default values
         if(!isset($constraints['minLength'])) {
@@ -36,6 +36,19 @@ class ModelBLL {
             $constraints['regexMsg'] = "$stringName contains invalid characters.";
         }
 
+        // Check if $stringContent is an object
+        if(is_object($stringContent)) {
+
+            // Throw exception if specified
+            if($constraints['throwException']) {
+                throw new \Exception($constraints['regexMsg']);
+            }
+
+            ValidationService::AddValidationError($constraints['regexMsg']);
+
+            return false;
+        }
+
         // Check if $stringContent is empty
         if($constraints['minLength'] == 1 && trim(strlen($stringContent)) == 0) {
 
@@ -45,6 +58,8 @@ class ModelBLL {
             }
 
             ValidationService::AddValidationError($constraints['emptyMsg']);
+
+            return false;
         }
 
         // Check if $stringContent is too short
@@ -56,6 +71,8 @@ class ModelBLL {
             }
 
             ValidationService::AddValidationError($constraints['minLengthMsg']);
+
+            return false;
         }
 
         // Check if $stringContent is too long
@@ -67,6 +84,8 @@ class ModelBLL {
             }
 
             ValidationService::AddValidationError($constraints['maxLength']);
+
+            return false;
         }
 
         // Check if $stringContent is valid
@@ -78,12 +97,14 @@ class ModelBLL {
             }
 
             ValidationService::AddValidationError($constraints['regexMsg']);
+
+            return false;
         }
 
         return true;
     }
 
-    protected function IsValidInt($intName, $intContent, $constraints = []) {
+    public function IsValidInt($intName, $intContent, $constraints = []) {
 
         // Default values
         if(!isset($constraints['minValue'])) {
@@ -113,7 +134,7 @@ class ModelBLL {
         }
 
         // Check if $intContent is not numeric
-        if(!($constraints['allowNull'] && is_null($intContent)) && !is_numeric($intContent)) {
+        if(!($constraints['allowNull'] && is_null($intContent)) && !is_numeric($intContent) || is_float($intContent)) {
 
             // Throw exception if specified
             if($constraints['throwException']) {
@@ -121,6 +142,8 @@ class ModelBLL {
             }
 
             ValidationService::AddValidationError($constraints['notNumericMsg']);
+
+            return false;
         }
 
         // Check if $intContent is too low
@@ -132,6 +155,8 @@ class ModelBLL {
             }
 
             ValidationService::AddValidationError($constraints['minValueMsg']);
+
+            return false;
         }
 
         // Check if $intContent is too large
@@ -143,12 +168,14 @@ class ModelBLL {
             }
 
             ValidationService::AddValidationError($constraints['maxValueMsg']);
+
+            return false;
         }
 
         return true;
     }
 
-    protected function IsValidFloat($floatName, $floatContent, $constraints = []) {
+    public function IsValidFloat($floatName, $floatContent, $constraints = []) {
 
         // Default values
         if(!isset($constraints['minValue'])) {
@@ -182,6 +209,8 @@ class ModelBLL {
             }
 
             ValidationService::AddValidationError($constraints['notFloatMsg']);
+
+            return false;
         }
 
         // Check if $floatContent is too low
@@ -193,6 +222,8 @@ class ModelBLL {
             }
 
             ValidationService::AddValidationError($constraints['minValueMsg']);
+
+            return false;
         }
 
         // Check if $stringContent is too large
@@ -204,12 +235,14 @@ class ModelBLL {
             }
 
             ValidationService::AddValidationError($constraints['maxValueMsg']);
+
+            return false;
         }
 
         return true;
     }
 
-    protected function IsValidBool($boolName, $boolContent, $constraints = [])
+    public function IsValidBool($boolName, $boolContent, $constraints = [])
     {
         // Default messages
         if(!isset($constraints['notBoolMsg'])) {
@@ -229,7 +262,11 @@ class ModelBLL {
             }
 
             ValidationService::AddValidationError($constraints['notBoolMsg']);
+
+            return false;
         }
+
+        return true;
     }
 
     protected function IsClassType($objName, $objContent, $constraints = [])

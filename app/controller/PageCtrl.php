@@ -28,7 +28,7 @@ class PageCtrl extends Controller
         // Create objects
         $pages = $this->ctrlHelper->CreateDALModel('PageDAL');
         $auth = $this->ctrlHelper->CreateService('AuthService');
-        
+
 
         if($this->ctrlHelper->DoesUrlParamsExist())
         {

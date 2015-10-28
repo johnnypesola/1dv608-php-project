@@ -45,4 +45,10 @@ class ValidationService {
             \model\FlashMessageService::Add($errorMessage, 'error');
         }
     }
+
+    public static function Clear()
+    {
+        self::$validationErrorsArray = [];
+        self::$isValid = true;
+    }
 } 

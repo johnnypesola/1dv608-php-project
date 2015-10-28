@@ -20,6 +20,8 @@ class AppSettings  extends ModelBLL {
     private $viewPath;
     private $viewNamespace;
 
+    private static $APP_PATH = "../app/";
+
     private static $constraints = [
         'defaultController' => [
             'maxLength' => 30,
@@ -108,7 +110,7 @@ class AppSettings  extends ModelBLL {
         if($this->IsValidString("controllerPath", $value, self::$constraints["controllerPath"])) {
 
             // Set value
-            $this->controllerPath = trim($value);
+            $this->controllerPath = self::$APP_PATH . basename(trim($value)) . '/';
 
             return true;
         }
@@ -147,7 +149,7 @@ class AppSettings  extends ModelBLL {
         if($this->IsValidString("modelPath", $value, self::$constraints["modelPath"])) {
 
             // Set value
-            $this->modelPath = trim($value);
+            $this->modelPath = self::$APP_PATH . basename(trim($value)) . '/';
 
             return true;
         }
@@ -185,7 +187,7 @@ class AppSettings  extends ModelBLL {
         if($this->IsValidString("viewPath", $value, self::$constraints["viewPath"])) {
 
             // Set value
-            $this->viewPath = trim($value);
+            $this->viewPath = self::$APP_PATH . basename(trim($value)) . '/';
 
             return true;
         }

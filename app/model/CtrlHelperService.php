@@ -154,33 +154,31 @@ class CtrlHelperService {
         call_user_func_array([$controllerObj, $methodStr], $parametersArray);
     }
 
-
-
 // Load methods
 
     public function LoadController($controllerName)
     {
-        return $this->LoadFile($this->appSettingsObj->GetControllerPath() . $controllerName . '.php');
+        return $this->LoadFile($this->appSettingsObj->GetControllerPath() . basename($controllerName) . '.php');
     }
 
     public function LoadBLLModel($modelName)
     {
-        return $this->LoadFile($this->appSettingsObj->GetModelPath() . 'BLL/' . $modelName . '.php');
+        return $this->LoadFile($this->appSettingsObj->GetModelPath() . 'BLL/' . basename($modelName) . '.php');
     }
 
     public function LoadDALModel($modelName)
     {
-        return $this->LoadFile($this->appSettingsObj->GetModelPath() . 'DAL/' . $modelName . '.php');
+        return $this->LoadFile($this->appSettingsObj->GetModelPath() . 'DAL/' . basename($modelName) . '.php');
     }
 
     public function LoadService($serviceName)
     {
-        return $this->LoadFile($this->appSettingsObj->GetModelPath() . $serviceName . '.php');
+        return $this->LoadFile($this->appSettingsObj->GetModelPath() . basename($serviceName) . '.php');
     }
 
     public function LoadView($viewName)
     {
-        return $this->LoadFile($this->appSettingsObj->GetViewPath() . $viewName . '.php');
+        return $this->LoadFile($this->appSettingsObj->GetViewPath() . basename($viewName) . '.php');
     }
 
 // Create methods

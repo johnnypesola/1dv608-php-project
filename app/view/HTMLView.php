@@ -72,6 +72,7 @@ class HtmlView extends View {
         if($isAuthorized)
         {
             $navigationArray[] = ['name' => 'Skapa sida', 'href' => 'page/create'];
+            $navigationArray[] = ['name' => 'Lista användare', 'href' => 'user'];
             $navigationArray[] = ['name' => 'Logga ut', 'href' => 'auth/logout'];
         }
         else

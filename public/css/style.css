@@ -196,8 +196,22 @@ h1 {
     clear: both;
 }
 
+table {
+    border-spacing: 0px;
+    border-collapse: separate;
+}
+
 table th {
     text-align: left;
+    padding: 3px;
+    background: #EEEEEE;
+    border: 1px solid #DDDDDD;
+    font-size: 14px;
+}
+
+table td {
+    padding: 3px;
+    border: 1px solid #EEEEEE;
 }
 
 input[type=submit], a.button {

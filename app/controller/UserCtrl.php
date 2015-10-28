@@ -35,7 +35,7 @@ class UserCtrl extends Controller
             $output = $usersView->GetOutput();
 
             // Render page
-            $this->ctrlHelper->htmlView->Render($output);
+            $this->ctrlHelper->htmlView->Render($output, $auth->IsUserLoggedIn());
         }
         else
         {

@@ -17,7 +17,7 @@ class View
         ob_start();
 
         // Get template content
-        require_once '../app/view/template/' . $templateName . '.php';
+        require_once '../app/view/template/' . basename($templateName) . '.php';
 
         // Get output and return it
         return ob_get_clean();
