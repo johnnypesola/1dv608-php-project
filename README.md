@@ -8,7 +8,7 @@
 
 Fagersta klätterklubb (Fagersta Climbing Society) has been in need for a new backend for their homepage.   
 The society currently has a very static backend containing two static pages which can be edited. They have   
-expressed big plans and desires for the future of the homepage and wished for functionality such as.
+expressed big plans and desires for the future of the homepage and wished for the following functionality.
 *  A multi user login
 *  A photo album with video support
 *  A file archive for club protocols written on club meetings
