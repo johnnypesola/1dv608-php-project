@@ -15,7 +15,7 @@ expressed big plans and desires for the future of the homepage and wished for th
 *  A calendar functionality for easily displaying coming events.
 
 Theese long going wishes has formed this project into a MVC framework-like web application with thought given  
-into the flexibility required for the expandibility of theese long going requirements.  
+into the flexibility required for the expandibility of theese long going requirements present in the clubs vision.  
    
 The first step was to build an base framework that is fast, secure and is easy to develop in. And the following   
 requirements and php application are a product after this first step.
