@@ -28,12 +28,12 @@ requirements and php application are a product after this first step.
 
 The project is tested on nginx and apache2 on a ubuntu server. As mysql database has been used for storage.
 1. Install mysql on a windows or linux server.
-2. Import the [following mysql database](fagerstaklatterklubb.sql) to the mysql server using your favourite client (perhaps phpmyadmin?). 
+2. Import the [following mysql database](fagerstaklatterklubb.sql) to the mysql server using your favourite client (perhaps phpmyadmin?).
 3. Place the 'App' and 'public' folders on your webserver (nginx or apache2).
 4. Configure a site using only the public folder as webroot.
 5. If you are using apache, then the .htaccess files should make the application work out of the box.
 6. If you are using nginx, you need to add the following line to the sites configuration file (in the location block) as shown below:
-   
+
 location / {
       #... other options
       try_files $uri $uri/ /index.php?url=$uri;
