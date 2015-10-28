@@ -30,6 +30,16 @@ UC1. 3 User is successfully logged in.
 6. The system logs out the user, removing eventual stored credentials for remembering the users login.
 7. The system presents a message to the user that the logut was successful.
 
+#UC3 User removes a page and logs out.
+##Precondition
+UC1. 3 User is successfully logged in.
+1. User is logged in and clicks on a item in the menu which the user wishes to remove.
+2. The system presents the user with a form where the user can edit and alsoe remove the page.
+3. The user clicks on delete.
+4. The system removes the page and informs the user about this.
+5. The user clicks on the logoutbutton on the menu to logout.
+6. The system logs out the user, removing eventual stored credentials for remembering the users login.
+7. The system presents a message to the user that the logut was successful.
 
 ###Supplementary specification
 System Quality Requirements
