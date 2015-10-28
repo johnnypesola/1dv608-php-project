@@ -15,6 +15,7 @@ require_once 'core/ModelDAL.php';
 
 // Model
 require_once 'model/ValidationService.php';
+require_once 'model/ExceptionsService.php';
 require_once 'model/FlashMessageService.php';
 require_once 'model/BLL/AppSettings.php';
 require_once 'model/BLL/User.php';

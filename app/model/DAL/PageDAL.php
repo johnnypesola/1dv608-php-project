@@ -14,11 +14,11 @@ class PageDAL extends ModelDAL
 // Init variables
     private static $DB_TABLE_NAME = 'page';
 
-    private static $DB_QUERY_ERROR = 'Error getting pages from database';
-    private static $DB_GET_ERROR = 'Error getting page from database';
-    private static $DB_INSERT_ERROR = 'Error adding page to database';
-    private static $DB_UPDATE_ERROR = 'Error updating page in database';
-    private static $DB_DELETE_ERROR = 'Error removing page from database';
+    private static $DB_QUERY_ERROR = 'Fel vid hämtning av sidor från databasen';
+    private static $DB_GET_ERROR = 'Fel vid hämtning av sida från databasen';
+    private static $DB_INSERT_ERROR = 'Fel vid addering av sida till databasen';
+    private static $DB_UPDATE_ERROR = 'Fel vid uppdatering av sida i databasen';
+    private static $DB_DELETE_ERROR = 'Fel vid bortagning av sida från databasen';
 
 // Constructor
 

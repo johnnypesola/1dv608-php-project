@@ -16,7 +16,7 @@ abstract class ModelDAL {
         "host" => "localhost"
     ];
 
-    private static $DB_CONNECT_ERROR = 'Error connecting to database. Please contact page admin.';
+    private static $DB_CONNECT_ERROR = 'Fel vid anslutning till databasen. Var vänligt kontakta sidansvarig.';
 
     protected static $db;
 

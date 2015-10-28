@@ -27,13 +27,13 @@ class ModelBLL {
             $constraints['emptyMsg'] = "$stringName is missing";
         }
         if(!isset($constraints['minLengthMsg'])) {
-            $constraints['minLengthMsg'] = "$stringName has too few characters, should be at least " . $constraints['minLength'] . " characters.";
+            $constraints['minLengthMsg'] = "$stringName har för få tecken, det borde ha minst " . $constraints['minLength'] . " tecken.";
         }
         if(!isset($constraints['maxLengthMsg'])) {
-            $constraints['maxLengthMsg'] = "$stringName is too long. Max length is " . $constraints['maxLength'] . " characters.";
+            $constraints['maxLengthMsg'] = "$stringName har för många tecken. Max antal tecken är " . $constraints['maxLength'] . ".";
         }
         if(!isset($constraints['regexMsg'])) {
-            $constraints['regexMsg'] = "$stringName contains invalid characters.";
+            $constraints['regexMsg'] = "$stringName innehåller ogiltiga tecken.";
         }
 
         // Check if $stringContent is an object
@@ -191,13 +191,13 @@ class ModelBLL {
 
         // Default messages
         if(!isset($constraints['minValueMsg'])) {
-            $constraints['minValueMsg'] = "$floatName value is too low. " . $constraints['minValue'] . " is the lowest allowed value.";
+            $constraints['minValueMsg'] = "$floatName värdet är för lågt. " . $constraints['minValue'] . " är det lägsta tillåtna värdet.";
         }
         if(!isset($constraints['maxValueMsg'])) {
-            $constraints['maxValueMsg'] = "$floatName value is too large. " . $constraints['maxValue'] . " is the largest allowed value.";
+            $constraints['maxValueMsg'] = "$floatName värdet är för högt. " . $constraints['maxValue'] . " är det högsta tillåtna värdet.";
         }
         if(!isset($constraints['notFloatMsg'])) {
-            $constraints['notFloatMsg'] = "$floatName should be a decimal value.";
+            $constraints['notFloatMsg'] = "$floatName måste vara ett decimalvärde.";
         }
 
         // Check if $floatContent is not a float
@@ -246,7 +246,7 @@ class ModelBLL {
     {
         // Default messages
         if(!isset($constraints['notBoolMsg'])) {
-            $constraints['notBoolMsg'] = "$boolName should be a boolean value.";
+            $constraints['notBoolMsg'] = "$boolName måste vara antingen sant eller falskt.";
         }
         // Do not throw exception as default
         if(!isset($constraints['throwException'])) {
@@ -287,7 +287,7 @@ class ModelBLL {
 
         // Default messages
         if(!isset($constraints['notClassTypeMsg'])) {
-            $constraints['notClassTypeMsg'] = "$objName should be an object of type: " . $constraints['classType'];
+            $constraints['notClassTypeMsg'] = "$objName måste vara ett objekt av typen: " . $constraints['classType'];
         }
 
 

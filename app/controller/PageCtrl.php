@@ -74,7 +74,7 @@ class PageCtrl extends Controller
             // Get output
             $output = $pageView->GetOutput();
 
-            \model\FlashMessageService::Add("Enter information for the new page to be created.");
+            \model\FlashMessageService::Add("Ange rubrik och innehåll för den nya sidan.");
 
             // Render page
             $this->ctrlHelper->htmlView->Render($output, $auth->IsUserLoggedIn());
@@ -129,7 +129,7 @@ class PageCtrl extends Controller
 
                 $pageId = $pages->Save($page);
 
-                \model\FlashMessageService::Add("Page successfully saved");
+                \model\FlashMessageService::Add("Sidan sparades med ett lyckat resultat.");
             }
 
             // Get controller name
@@ -162,7 +162,7 @@ class PageCtrl extends Controller
             $pages->Delete($page);
 
             // Display message to user
-            \model\FlashMessageService::Add("Page successfully deleted");
+            \model\FlashMessageService::Add("Sidan raderades med ett lyckat resultat.");
 
             // Redirect
             $this->ctrlHelper->RedirectTo($this);

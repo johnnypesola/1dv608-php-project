@@ -53,7 +53,7 @@ class AuthCtrl extends Controller
                 // Store logged in user object in sessions cookie
                 $auth->KeepUserLoggedInForSession($user);
 
-                \model\FlashMessageService::Add("Successfully logged in.");
+                \model\FlashMessageService::Add("Inloggningen lyckades.");
 
                 $this->ctrlHelper->RedirectTo("page/show");
             }
@@ -93,7 +93,7 @@ class AuthCtrl extends Controller
             }
         }
 
-        \model\FlashMessageService::Add("Successfully logged out.");
+        \model\FlashMessageService::Add("Utloggningen lyckades.");
 
         $this->ctrlHelper->RedirectTo($this);
     }
@@ -151,14 +151,14 @@ class AuthCtrl extends Controller
                         $loginView->SaveLoginOnClient($user);
                     }
 
-                    \model\FlashMessageService::Add("Successfully logged in.");
+                    \model\FlashMessageService::Add("Inloggningen lyckades.");
 
                     $this->ctrlHelper->RedirectTo("page/show");
 
                 } else {
 
                     // The user was denied access
-                    \model\FlashMessageService::Add("Wrong username or password", "warning");
+                    \model\FlashMessageService::Add("Fel användarnamn eller lösenord", "warning");
                 }
             }
             else

@@ -9,11 +9,11 @@ class UserDAL extends ModelDAL {
 // Init variables
     private static $DB_TABLE_NAME = 'user';
 
-    private static $DB_QUERY_ERROR = 'Error getting users from database';
-    private static $DB_GET_ERROR = 'Error getting user from database';
-    private static $DB_INSERT_ERROR = 'Error adding user to database';
-    private static $DB_UPDATE_ERROR = 'Error updating user in database';
-    private static $DB_USERNAME_EXISTS = 'User exists, pick another username.';
+    private static $DB_QUERY_ERROR = 'Fel vid hämtning av användaren från databasen';
+    private static $DB_GET_ERROR = 'Fel vid hämtning av användaren från databasen';
+    private static $DB_INSERT_ERROR = 'Fel vid addering av användare till databasen';
+    private static $DB_UPDATE_ERROR = 'Fel vid uppdatering av användare i databasen';
+    private static $DB_USERNAME_EXISTS = 'En användare med detta användarnamn finns redan i databasen, var god välj ett annat användarnamn.';
 
     private static $MAX_REGISTRATIONS_PER_HOUR = 30;
 

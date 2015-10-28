@@ -56,7 +56,7 @@ class AuthService {
         if(!$this->DoHashesEqual(self::Hash($user->GetUserName() . $user->GetToken()), $user->GetSignature())) {
 
             // Signatures does not match
-            throw new \UnexpectedValueException("Signature from 'username' and 'token' does not match original 'signature'");
+            throw new \UnexpectedValueException("Signaturen från 'username' och 'token' matchar inte orginal 'signaturen'");
         }
 
         // Try to get specific user
@@ -74,7 +74,7 @@ class AuthService {
     public function Authenticate(\model\User $user) {
 
         if($this->logins->GetUserLoginsForHour($user) > self::$MAX_LOGINS_PER_HOUR) {
-            throw new \Exception("Max login attempts for username '" . $user->GetUserName() . "' reached. Please try again in 30-60 minutes.");
+            throw new \Exception("Max loginförsök för användaren '" . $user->GetUserName() . "' har uppnåtts. Var god försök igen inom 30-60 till minuter.");
         }
 
         // Assert that the password is in plain text.

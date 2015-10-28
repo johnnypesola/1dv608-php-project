@@ -50,12 +50,18 @@ class AppCtrl extends Controller
         $this->ctrlHelper->LoadBLLModel('Page');
         $this->ctrlHelper->LoadDALModel('PageDAL');
 
-        // Parse and process url
-        $this->ctrlHelper->ProcessUrl($this->htmlView->GetUrl());
+        try {
+            // Parse and process url
+            $this->ctrlHelper->ProcessUrl($this->htmlView->GetUrl());
 
-        // Execute controller
-        $this->ctrlHelper->ExecuteController($this->controllerObj, $this->methodStr, $this->parameters);
-
+            // Execute controller
+            $this->ctrlHelper->ExecuteController($this->controllerObj, $this->methodStr, $this->parameters);
+        }
+        catch (\Exception $exception)
+        {
+            // Store exceptions in applications exceptions container model
+            \Model\ExceptionsService::AddException($exception);
+        }
     }
 
     // Public methods

@@ -36,7 +36,7 @@ class HtmlView extends View {
         // Render page header
         $this->RenderHeader();
 
-        $this->RenderFlashMsg();
+        $this->RenderMsg();
 
         $this->RenderNavigation($isAuthorized);
 
@@ -86,10 +86,22 @@ class HtmlView extends View {
     }
 
 
-    private function RenderFlashMsg()
+
+
+
+    private function RenderMsg()
     {
+        // Get exception messages if there are any.
+        if(\model\ExceptionsService::HasExceptions()) {
+
+            echo $this->LoadTemplate(
+                'MessageTpl',
+                \model\ExceptionsService::GetLastExceptionMessage()
+            );
+        }
+
         // Get validations errors if there are any
-        if(\model\FlashMessageService::DoesExist())
+        else if(\model\FlashMessageService::DoesExist())
         {
             echo $this->LoadTemplate(
                 'MessageTpl',

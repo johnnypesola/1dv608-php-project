@@ -13,11 +13,11 @@ class GroupDAL extends ModelDAL {
     // Init variables
     private static $DB_TABLE_NAME = 'group';
 
-    private static $DB_QUERY_ERROR = 'Error getting groups from database';
-    private static $DB_GET_ERROR = 'Error getting group from database';
-    private static $DB_INSERT_ERROR = 'Error adding group to database';
-    private static $DB_UPDATE_ERROR = 'Error updating group in database';
-    private static $DB_GROUP_NAME_EXISTS = 'Group exists, pick another group name.';
+    private static $DB_QUERY_ERROR = 'Fel vid hämtning av grupper från databasen';
+    private static $DB_GET_ERROR = 'Fel vid hämtning av grupp från databasen';
+    private static $DB_INSERT_ERROR = 'Fel vid addering av grupp till databasen';
+    private static $DB_UPDATE_ERROR = 'Fel vid uppdatering av grupp till databasen';
+    private static $DB_GROUP_NAME_EXISTS = 'En grupp med detta namn existerar redan, Var god välj ett annat namn.';
 
     private static $MAX_REGISTRATIONS_PER_HOUR = 30;
 

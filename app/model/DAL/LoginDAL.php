@@ -14,10 +14,10 @@ class LoginDAL extends ModelDAL
 // Init variables
     private static $DB_TABLE_NAME = 'login';
 
-    private static $DB_QUERY_ERROR = 'Error getting logins from database';
-    private static $DB_GET_ERROR = 'Error getting login from database';
-    private static $DB_INSERT_ERROR = 'Error adding login to database';
-    private static $DB_UPDATE_ERROR = 'Error updating login in database';
+    private static $DB_QUERY_ERROR = 'Fel vid hämntning av logins från databasen';
+    private static $DB_GET_ERROR = 'Fel vid hämtning av login från databasen';
+    private static $DB_INSERT_ERROR = 'Fel vid addering av login till databasen';
+    private static $DB_UPDATE_ERROR = 'Fel vid uppdatering login i databasen';
 
 // Constructor
 
