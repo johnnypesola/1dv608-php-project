@@ -35,10 +35,12 @@ The project is tested on nginx and apache2 on a ubuntu server. As mysql database
 *  If you are using nginx, you need to add the following line to the sites configuration file (in the location block) as  shown below.
 *  use the default credentials: 'admin' as username and 'password' as password to login to the system.   
 
+```
 location / {   
       #... other options   
       try_files $uri $uri/ /index.php?url=$uri;   
 }
+```
 
 Allthough its not tested, the application should be able to run on apache2 for windows any further configuration.
 
