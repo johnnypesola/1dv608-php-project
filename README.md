@@ -10,6 +10,8 @@ Author: Johnny Pesola 2015
 
 [Online demo of application](http://nya.fagerstaklatterklubb.se)
 
+[Class diagram](classdiagram.pdf)
+
 ### Vision
 
 Fagersta klätterklubb (Fagersta Climbing Society) has been in need for a new backend for their homepage.   
