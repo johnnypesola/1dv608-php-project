@@ -37,8 +37,6 @@ class AppCtrl extends Controller
     {
         // Setup html view
         $this->htmlView = new HtmlView();
-        $this->htmlView->pageTitle = 'Fagersta Klätterklubb';
-        $this->htmlView->pageHeader = 'Välkommen till Fagersta Klätterklubb';
 
         // Setup app helper service
         $this->ctrlHelper = new CtrlHelperService(
